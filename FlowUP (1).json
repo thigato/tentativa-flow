@@ -1,0 +1,2415 @@
+{
+  "name": "FLowUP",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -160,
+        0
+      ],
+      "id": "1d5b92a9-a02d-4034-91e8-003f0ea0d4c1",
+      "name": "When chat message received",
+      "webhookId": "c2507677-e00e-4625-ba14-2c64262f48c8"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "362f547f-30cc-4b1a-988c-10d0a5156e45",
+              "name": "remoteJid",
+              "value": "=123123",
+              "type": "string"
+            },
+            {
+              "id": "77d1a9f3-1ce3-427e-82d7-d3980e82db97",
+              "name": "isFromMe",
+              "value": "=false",
+              "type": "boolean"
+            },
+            {
+              "id": "8f53a371-69f9-48b1-a319-298483b39074",
+              "name": "messageId",
+              "value": "=123123",
+              "type": "string"
+            },
+            {
+              "id": "a7626ddd-50cb-47f5-852a-bf6a4e8ef471",
+              "name": "pushName",
+              "value": "=Vai final223",
+              "type": "string"
+            },
+            {
+              "id": "352e50e2-fd87-4a08-bed3-733e52c34d2a",
+              "name": "phoneNumber",
+              "value": "=5591994322283",
+              "type": "string"
+            },
+            {
+              "id": "5a35407b-102a-4a37-b484-d797365e5af3",
+              "name": "messageType",
+              "value": "=msg",
+              "type": "string"
+            },
+            {
+              "id": "ef0decef-f753-4744-9c44-b0b6a8027993",
+              "name": "message",
+              "value": "={{ $json.chatInput }}",
+              "type": "string"
+            },
+            {
+              "id": "e7e2a69d-ea9d-442b-bb85-a4b45d95db7c",
+              "name": "url_evolution",
+              "value": "=oi",
+              "type": "string"
+            },
+            {
+              "id": "7a01bf0b-5a59-49b4-b2c7-a36a3ef98bcd",
+              "name": "instancia",
+              "value": "=abc",
+              "type": "string"
+            },
+            {
+              "id": "73f3bf45-bbcb-4c20-9b92-aece70987e97",
+              "name": "telegram_chat_id",
+              "value": "-1001400992847",
+              "type": "string"
+            },
+            {
+              "id": "24490be1-b439-4d0e-aaad-de10c27d28b6",
+              "name": "calendar_id",
+              "value": "bahmeo",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        144,
+        0
+      ],
+      "id": "b2200c69-1b19-4e78-bbd7-3ba8ccb3037c",
+      "name": "principalFields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0900d6a8-9cd9-49e3-b15a-20e6708d6bc5",
+              "leftValue": "={{ $('BuscarCliente').item.json.values().length > 0 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        928,
+        0
+      ],
+      "id": "e23f8630-52dd-40e9-9238-379aab1c66ed",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \n    *\nFROM customers \nWHERE phone_number = '{{ $('principalFields').item.json.phoneNumber }}'",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        672,
+        0
+      ],
+      "id": "a5efc8c6-2716-4da5-bd7c-21146152eec2",
+      "name": "BuscarCliente",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 2000,
+      "credentials": {
+        "postgres": {
+          "id": "BGQa8Box2oEOXg4s",
+          "name": "VENDEDOR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b03c763e-89e7-4752-98fd-a54e67931616",
+              "name": "veio_de_anuncio",
+              "value": "={{ /https?:\\/\\/\\S+/.test($json.message) }}",
+              "type": "boolean"
+            },
+            {
+              "id": "efb234d8-9a53-40f2-8114-228f16d92817",
+              "name": "nome_da_loja",
+              "value": "AutoPRO",
+              "type": "string"
+            },
+            {
+              "id": "793b4304-ba72-4e09-a71d-40c309b3c549",
+              "name": "ano_modelo_novo",
+              "value": "={{ (new Date().getFullYear() - 3) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        384,
+        0
+      ],
+      "id": "aa9f1b76-20e2-495b-9d28-6e99ebe584f0",
+      "name": "VeioDeAnuncio"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO customers (\n    phone_number,\n    name,\n    status,\n    source_channel,\n    created_at,\n    assigned_salesperson\n) VALUES (\n    '{{ $('principalFields').item.json.phoneNumber }}',\n    '{{ $('principalFields').item.json.pushName }}',\n    'new',\n    '{{ $('VeioDeAnuncio').item.json.veio_de_anuncio ? \"advertising\" : \"whatsapp\" }}',\n    '{{ $now }}',\n    NULL\n) RETURNING *;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1168,
+        112
+      ],
+      "id": "a1472a89-fba7-4280-b9c9-e05e7920cb06",
+      "name": "CriarCliente",
+      "credentials": {
+        "postgres": {
+          "id": "BGQa8Box2oEOXg4s",
+          "name": "VENDEDOR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO customer_preferences (\n    customer_id,\n    price_range_min,\n    price_range_max,\n    preferred_car_type,\n    preferred_payment_method,\n    has_trade_in,\n    updated_at\n) VALUES (\n    '{{ $json.id }}',\n    NULL,\n    NULL,\n    NULL,\n    NULL,\n    false,\n    '{{ $now }}'\n) RETURNING *;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1376,
+        112
+      ],
+      "id": "a1ff40dc-571d-4e69-ad9c-1a5534269700",
+      "name": "CriarPreferencias",
+      "credentials": {
+        "postgres": {
+          "id": "BGQa8Box2oEOXg4s",
+          "name": "VENDEDOR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO customer_interactions_summary (\n    customer_id,\n    interaction_stage,\n    conversion_probability,\n    updated_at\n) VALUES (\n    '{{ $('CriarCliente').item.json.id }}',\n    'initial',\n    20,\n    '{{ $now }}'\n) RETURNING *;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1616,
+        112
+      ],
+      "id": "3c574a8c-6a88-4b4d-8e46-8dce07db0f81",
+      "name": "CriarResumo",
+      "credentials": {
+        "postgres": {
+          "id": "BGQa8Box2oEOXg4s",
+          "name": "VENDEDOR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"customer_found\": false,\n  \"is_new_customer\": true,\n  \"customer_data\": {\n    \"id\": {{ $('CriarCliente').item.json.id }},\n    \"name\": \"{{ $('CriarCliente').item.json.name }}\",    \n    \"phone\": {{ $('CriarCliente').item.json.phone_number }},\n    \"status\": \"{{ $('CriarCliente').item.json.status }}\",\n     \"last_interaction\": \"{{ $('CriarCliente').item.json.last_interaction }}\",\n    \"created_at\": \"{{ $('CriarCliente').item.json.created_at }}\",\n    \"source\": \"{{ $('CriarCliente').item.json.source_channel }}\",\n    \"salesperson\": {{ $('CriarCliente').item.json.assigned_salesperson}}\n  },\n \"preferences\": {\n    \"id\": {{ $('CriarPreferencias').item.json.id }},\n    \"price_range_min\": {{ $('CriarPreferencias').item.json.price_range_min }},\n    \"price_range_max\": {{ $('CriarPreferencias').item.json.price_range_max }},\n    \"car_type\": {{ $('CriarPreferencias').item.json.preferred_car_type}},\n    \"payment_method\": {{ $('CriarPreferencias').item.json.preferred_payment_method }},\n    \"has_trade\": {{ $('CriarPreferencias').item.json.has_trade_in }},\n    \"trade_in_brand\": {{ $('CriarPreferencias').item.json.trade_in_brand }},\n    \"trade_in_model\": {{ $('CriarPreferencias').item.json.trade_in_model }},\n    \"trade_in_year\": {{ $('CriarPreferencias').item.json.trade_in_year }}\n  },\n\"interaction_context\": {\n    \"id\": {{ $('CriarResumo').item.json.id }},\n    \"stage\": \"{{ $('CriarResumo').item.json.interaction_stage }}\",\n    \"last_model_viewed\": {{ $('CriarResumo').item.json.last_model_viewed }},\n    \"last_car_id_interested\": {{ $('CriarResumo').item.json.last_car_id_interested }},\n    \"total_interactions\": {{ $('CriarCliente').item.json.total_interactions }},\n    \"probability\": {{ $('CriarResumo').item.json.conversion_probability }}\n  },\n  \"next_action\": \"initial_greeting\",\n  \"use_prompt\": \"1\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1824,
+        112
+      ],
+      "id": "120ac632-fbc7-4049-a8c2-bf4d8c12ae5f",
+      "name": "OutputCriarCliente"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \n    c.id,\n    c.phone_number,\n    c.name,\n    c.email,\n    c.status,\n    c.source_channel,\n    c.assigned_salesperson,\n    c.last_interaction,\n    c.total_interactions,\n    c.lead_score,\n  \n    cp.price_range_min,\n    cp.price_range_max,\n    cp.preferred_car_type,\n    cp.preferred_year_min,\n    cp.preferred_payment_method,\n    cp.has_trade_in,\n    cp.trade_in_brand,\n    cp.trade_in_model,\n    cp.trade_in_year,\n    cp.trade_in_estimated_value,\n    cp.id as cpid,\n\n    cis.last_model_viewed,\n    cis.last_car_id_interested,\n    cis.interaction_stage,\n    cis.preferred_contact_time,\n    cis.last_objection_type,\n    cis.conversion_probability,\n    cis.objections_count,\n    cis.next_followup_date,\n    cis.tools_used_count,\n    cis.total_session_time,\n    cis.last_objection,  \n    cis.id as cisid\nFROM customers c\nLEFT JOIN customer_preferences cp ON c.id = cp.customer_id\nLEFT JOIN customer_interactions_summary cis ON c.id = cis.customer_id\nWHERE c.phone_number = '{{ $('principalFields').item.json.phoneNumber }}';",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1168,
+        -112
+      ],
+      "id": "8c36e80d-c55a-4e76-aa39-ad0a7d5e91f9",
+      "name": "BuscaLead",
+      "credentials": {
+        "postgres": {
+          "id": "BGQa8Box2oEOXg4s",
+          "name": "VENDEDOR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE customers\nSET \n    last_interaction = '{{ $now }}',\n    total_interactions = total_interactions + 1,\n    status = CASE \n             WHEN total_interactions + 1 > 1 THEN 'contacted'\n             ELSE status\n           END\nWHERE id = {{ $json.id }};",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1376,
+        -368
+      ],
+      "id": "b83f312f-2253-4108-8401-dbf792e90dcc",
+      "name": "AtualizaUltimaInteracao",
+      "credentials": {
+        "postgres": {
+          "id": "BGQa8Box2oEOXg4s",
+          "name": "VENDEDOR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"customer_found\": true,\n  \"is_new_customer\": false,\n  \"customer_data\": {\n    \"id\": {{ $('BuscaLead').item.json.id }},\n    \"name\": \"{{ $('BuscaLead').item.json.name }}\",\n    \"phone\": \"{{ $('BuscaLead').item.json.phone_number }}\",\n    \"status\": \"{{ $('BuscaLead').item.json.status }}\",\n    \"last_interaction\": {{ $('BuscaLead').item.json.last_interaction ? `\"`+ $('BuscaLead').item.json.last_interaction + `\"` : null }},\n    \"source\": {{ $('BuscaLead').item.json.source_channel ? `\"` + $('BuscaLead').item.json.source_channel + `\"` : null }},\n    \"salesperson\": {{ $('BuscaLead').item.json.assigned_salesperson ? `\"` + $('BuscaLead').item.json.assigned_salesperson + `\"` : null}}\n  },\n  \"preferences\": {\n    \"id\": {{ $('BuscaLead').item.json.cpid}},\n    \"price_range_min\": {{ $('BuscaLead').item.json.price_range_min }},\n    \"price_range_max\": {{ $('BuscaLead').item.json.price_range_max }},\n    \"car_type\": {{ $('BuscaLead').item.json.preferred_car_type ? `\"` + $('BuscaLead').item.json.preferred_car_type + `\"` : null}},\n    \"payment_method\": {{ $('BuscaLead').item.json.preferred_payment_method ? `\"` + $('BuscaLead').item.json.preferred_payment_method + `\"` : null }},\n    \"preferred_year_min\": {{ $('BuscaLead').item.json.preferred_year_min }},\n    \"has_trade\": {{ $('BuscaLead').item.json.has_trade_in }},\n    \"trade_in_brand\": {{ $('BuscaLead').item.json.trade_in_brand ? `\"` + $('BuscaLead').item.json.trade_in_brand + `\"` : null }},\n    \"trade_in_model\": {{ $('BuscaLead').item.json.trade_in_model ? `\"`+ $('BuscaLead').item.json.trade_in_model + `\"` : null }},\n    \"trade_in_year\": {{ $('BuscaLead').item.json.trade_in_year ? `\"` + $('BuscaLead').item.json.trade_in_year + `\"` : null}}\n  },\n  \"interaction_context\": {\n    \"id\": {{ $('BuscaLead').item.json.cisid }},\n    \"stage\": \"{{ $('BuscaLead').item.json.interaction_stage }}\",\n    \"last_model_viewed\": {{ $('BuscaLead').item.json.last_model_viewed ? `\"` + $('BuscaLead').item.json.last_model_viewed + `\"` : null }},\n    \"last_car_id_interested\": {{ $('BuscaLead').item.json.last_car_id_interested }},\n    \"total_interactions\": {{ $('BuscaLead').item.json.total_interactions }},\n    \"probability\": {{ $('BuscaLead').item.json.conversion_probability }}\n  },\n  \"next_action\": \"contextualized_greeting\",\n  \"use_prompt\": \"contextual\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1824,
+        -112
+      ],
+      "id": "d8775b79-7dd9-48e0-ba6a-69fdc3c80901",
+      "name": "OutputBuscarCliente"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        2288,
+        352
+      ],
+      "id": "26fdd52d-2aa0-4b06-ae07-53c8a0d4dcec",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "tQe8x2PkVEeffsHh",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1.1,
+      "position": [
+        2640,
+        352
+      ],
+      "id": "087394e5-8a86-4fc8-84c0-47ab748ef22f",
+      "name": "Think"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('principalFields').item.json.message }}",
+        "options": {
+          "systemMessage": "=Você é um ROTEADOR que recebe briefing contextualizado e executa a ferramenta correspondente.\n\n## INPUT RECEBIDO:\n**Briefing do Agent Briefing:** {{ $json.output }}\n\n## SUA FUNÇÃO:\nExtrair a categoria recomendada do briefing e executar a ferramenta correspondente.\n\n## MAPEAMENTO CATEGORIA → FERRAMENTA:\n\n- **ABERTURA** → prompt_1_abertura\n- **COLETA_PREFERENCIAS** → prompt_2_identificar_interesse\n- **APRESENTACAO_ESTOQUE** → prompt_3_apresentar_estoque\n- **DETALHAMENTO** → prompt_4_detalhar_veiculo\n- **QUALIFICACAO** → prompt_5_qualificar_interesse\n- **AGENDAMENTO** → prompt_6_agendar_visita\n- **RECONHECER_ANUNCIO** → prompt_7_reconhecer_anuncio\n- **DETALHAR_ANUNCIADO** → prompt_8_detalhar_anunciado\n- **QUEBRAR_OBJECOES** → prompt_9_quebrar_objecoes\n- **CONDUZIR_VISITA** → prompt_10_conduzir_visita\n- **CONFIRMACAO** → prompt_11_confirmar_agendamento\n- **OBJECOES** → prompt_12_tratar_objecoes\n- **TROCA** → prompt_13_qualificar_troca\n- **Think**: Use esta ferramenta para pensar profundamente ou se ficar preso\n\n## PROCESSO:\n\n1. **EXTRAIR** categoria do briefing recebido (procurar por \"CATEGORIA_RECOMENDADA:\")\n2. **MAPEAR** categoria para ferramenta correspondente\n3. **EXECUTAR** ferramenta passando briefing como contexto\n\n## FALLBACK:\nSe categoria não for identificada → prompt_5_qualificar_interesse\n\n## EXEMPLO:\n```\nInput: \"CATEGORIA_RECOMENDADA: DETALHAMENTO\"\nMapeamento: DETALHAMENTO → prompt_4_detalhar_veiculo\nAção: Executar prompt_4_detalhar_veiculo\n```\n\n**IMPORTANTE:** Confie totalmente no briefing recebido - toda análise já foi feita pelo Agent Briefing."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        3344,
+        -368
+      ],
+      "id": "93166add-68fb-4b27-97a1-06b0db6c5298",
+      "name": "AgentClassificador"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Abertura e Boas-vindas",
+        "text": "={{ $('principalFields').item.json.message }}",
+        "options": {
+          "systemMessage": "=Você é a assistente virtual da loja de carros \"{{$('VeioDeAnuncio').item.json.nome_da_loja}}\".\n\n## CONTEXTO DA SITUAÇÃO: {{ $('AgentDeBriefing').item.json.output }}\n\n## SUA MISSÃO:\nFazer abertura adequada baseada no contexto recebido e identificar motivo do contato.\n\n## PROCESSO OBRIGATÓRIO:\n\n### PASSO 1: ANALISAR A SITUAÇÃO\n- Leia atentamente o contexto fornecido\n- Identifique a estratégia recomendada\n- Note o que deve ser evitado\n\n### PASSO 2: GERAR ABERTURA PERSONALIZADA\n- **Tom caloroso e acolhedor** SEMPRE\n- **Use nome** quando disponível no contexto\n- **Máximo 2-3 frases** na abertura\n- **SEMPRE termine com pergunta** para engajar\n- **Adapte formalidade** ao contexto específico\n\n### PASSO 3: EXECUTE AtualizarStatusContacted\n**SEMPRE execute** esta ferramenta para:\n- Atualizar status (new → contacted)\n- Registrar interação no histórico\n- Atualizar stage (→ greeted)\n\n## DIRETRIZES POR TIPO DE SITUAÇÃO:\n\n### **CLIENTE NOVO (primeira vez):**\n- Apresentação completa da loja\n- Explique como pode ajudar\n- Ofereça opções principais\n- Gere curiosidade sobre estoque\n\n### **CLIENTE RETORNANTE:**\n- Use nome se disponível\n- Menos apresentação formal\n- Reconheça que não é primeira vez\n- Foque no que pode ajudar HOJE\n\n### **CLIENTE COM BAIXO ENGAJAMENTO:**\n- Tom mais empático\n- Ofereça ajuda específica\n- Desperte interesse renovado\n- Mostre valor imediato\n\n## EXEMPLOS DE ABERTURA:\n\n### **Cliente Novo:**\n\"Olá! Seja muito bem-vindo à {{$('VeioDeAnuncio').item.json.nome_da_loja}}! 🚗 Sou a assistente virtual e estou aqui para te ajudar a encontrar o carro ideal. Você já tem algum modelo em mente ou gostaria que eu mostre nossas melhores opções disponíveis?\"\n\n### **Cliente Retornante com Nome:**\n\"Oi [Nome]! Que bom ter você de volta! 😊 Como posso te ajudar hoje? Está procurando algum modelo específico ou quer ver algumas opções interessantes?\"\n\n### **Cliente Retornante sem Nome:**\n\"Olá! Que bom ter você de volta! Como posso te ajudar hoje? Decidiu sobre algum modelo ou quer explorar outras opções?\"\n\n### **Cliente com Baixo Engajamento:**\n\"Oi! Tudo bem? 😊 Vejo que você tem visitado nossos carros. Que tal eu te ajudar a encontrar exatamente o que você procura? Tem algum tipo de carro em mente?\"\n\n## REGRAS DE PERSONALIZAÇÃO:\n\n**COM NOME DISPONÍVEL:**\n- Sempre use o nome na saudação\n- Crie conexão mais pessoal\n- Tom mais próximo\n\n**SEM NOME:**\n- Use saudação genérica calorosa\n- Mantenha profissionalismo acolhedor\n- Foque na necessidade\n\n**ORIGEM ESPECIAL (anúncio, indicação):**\n- Pode referenciar origem sutilmente\n- Agradeça a chegada\n- Conecte com interesse demonstrado\n\n## FERRAMENTAS:\n- **AtualizarStatusContacted** (obrigatória)\n\n## INSTRUÇÕES FINAIS:\n1. **Siga** as recomendações do contexto recebido\n2. **Personalize** a abertura baseada na situação específica\n3. **Execute AtualizarStatusContacted** obrigatoriamente\n4. **Prepare** terreno para próximos passos\n5. **Mantenha** tom caloroso mas adequado ao contexto\n\nUse emojis sutilmente (1-2 no máximo) e sempre gere curiosidade para manter o engajamento."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        2800,
+        528
+      ],
+      "id": "6e7bbea7-02a5-4af0-a570-342d9421c8e0",
+      "name": "prompt_1_abertura"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        2592,
+        752
+      ],
+      "id": "e75cd9dd-8af9-41dc-897e-06a35933c2a6",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "tQe8x2PkVEeffsHh",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Identificação do Interesse",
+        "text": "={{ $('principalFields').item.json.message }}",
+        "options": {
+          "systemMessage": "=Você é a assistente virtual da loja de carros \"{{$('VeioDeAnuncio').item.json.nome_da_loja}}\" especializada em coleta de preferências.\n\n## CONTEXTO DA SITUAÇÃO: \n{{ $('AgentDeBriefing').item.json.output }}\n\n## SUA MISSÃO:\nColetar preferências do cliente de forma consultiva, validando disponibilidade no estoque.\n\n## PROCESSO OBRIGATÓRIO:\n\n### PASSO 1: SEGUIR ESTRATÉGIA DO BRIEFING\n- Use a **SITUAÇÃO** descrita para entender o momento do cliente\n- Aplique a **ESTRATÉGIA** recomendada no briefing\n- **EVITE** o que foi indicado no briefing\n\n### PASSO 2: VERIFICAR DISPONIBILIDADE NO ESTOQUE E ATUALIZAR SISTEMA\n1 - Execute **VerificarEstoqueDisponivelPorPreferencia** apenas se houver pelo menos um critério válido: preço (mínimo ou máximo), tipo de carro ou ano.\n- Sempre envie 7 binds, nesta ordem:\n  [min_price, max_price, type, year, use_price, use_type, use_year].\n- Defaults quando não extraído:\n  min_price=0, max_price=999999, type_car=\"\", year=0,\n  use_price=false, use_type=false, use_year=false.\n- Nunca envie null/undefined.\n- Nunca envie números como string.\n- Flags `use_*` determinam se cada filtro deve ou não ser aplicado.\n- Se vier um critério, **chame a tool**.\n2 - Execute **AtualizaSistemaCustomer**\n**AtualizaSistemaCustomer** - Salva preferências extraídas\n- Sempre envie 6 binds, nesta ordem:\n  [min_price, max_price, type, year, use_price, use_type, use_year].\n- Defaults quando não extraído:\n  min_price=0, max_price=999999, type_car=\"\", year=0,\n  payment_method=\"\", has_trade_in=false.\n- Nunca envie null/undefined.\n- Nunca envie números como string.\n\n### PASSO 3: EXTRAIR E VALIDAR INFORMAÇÕES\nBaseado na verificação de estoque + mensagem do cliente:\n- **Se temos estoque**: Confirme preferência e colete próximo campo\n- **Se não temos estoque**: Sugira alternativas próximas ou expanda critérios\n- **Se estoque limitado**: Mencione isso como urgência/oportunidade\n\n### PASSO 4: GERAR RESPOSTA INTELIGENTE\nBaseada em: briefing + verificação de estoque + preferências + próximo campo.\n\n## ESTRATÉGIA BASEADA EM DISPONIBILIDADE:\n\n### **SE TEMOS BOAS OPÇÕES NO ESTOQUE:**\n- Confirme entusiasticamente a preferência\n- Mencione quantidade disponível como benefício\n- \"Perfeito! Temos ótimas opções de SUV nessa faixa. Encontrei [X] modelos que podem te interessar.\"\n\n### **SE ESTOQUE LIMITADO (1-2 opções):**\n- Confirme mas crie urgência\n- \"Ótima escolha! Temos algumas opções interessantes de SUV nessa faixa, mas o estoque está bem disputado.\"\n\n### **SE NÃO TEMOS ESTOQUE EXATO:**\n- Reconheça preferência mas sugira alternativas\n- \"Entendi seu interesse em SUV até 60k. Nessa faixa específica nosso estoque está limitado, mas tenho ótimas opções até 80k que podem te surpreender.\"\n\n### **SE ESTOQUE AMPLO:**\n- Use como vantagem competitiva\n- \"Excelente! SUV na faixa 100-150k é nosso forte. Temos mais de [X] opções incríveis para você escolher.\"\n\n## ABORDAGEM POR SITUAÇÃO:\n\n### **PRIMEIRA COLETA + ESTOQUE DISPONÍVEL:**\n\"Para encontrar as melhores opções, qual faixa de investimento tem em mente? Temos ótimas opções em todas as faixas: até 80 mil, entre 80-150 mil, ou acima de 150 mil?\"\n\n### **CONTINUANDO COLETA + VERIFICAÇÃO POSITIVA:**\n\"Perfeito! SUV é uma ótima escolha e temos várias opções disponíveis. Qual faixa de investimento você tem em mente para encontrar a opção ideal?\"\n\n### **PREFERÊNCIA SEM ESTOQUE:**\n\"Entendi seu interesse em [preferência]. Nessa especificação exata nosso estoque está limitado no momento, mas tenho alternativas muito interessantes. Que tal expandirmos um pouco os critérios?\"\n\n### **PREFERÊNCIAS COMPLETAS + ESTOQUE CONFIRMADO:**\n\"Perfeito! SUV na faixa de 80-120k, financiado. Temos [X] opções que se encaixam exatamente no seu perfil. Está correto? Que tal ver essas opções?\"\n\n## TRATAMENTO POR RESULTADO DA VERIFICAÇÃO:\n\n### **ESTOQUE ABUNDANTE (>5 carros):**\n- \"Temos várias opções\"\n- \"Ampla variedade disponível\"\n- \"Você terá muitas escolhas\"\n\n### **ESTOQUE MODERADO (3-5 carros):**\n- \"Temos algumas boas opções\"\n- \"Encontrei algumas alternativas interessantes\"\n- \"Há opções disponíveis\"\n\n### **ESTOQUE LIMITADO (1-2 carros):**\n- \"Temos poucas opções nessa especificação\"\n- \"Estoque limitado mas interessante\"\n- \"Há uma oportunidade específica\"\n\n### **SEM ESTOQUE (0 carros):**\n- \"Nessa especificação exata nosso estoque está limitado\"\n- \"Que tal expandirmos os critérios?\"\n- \"Tenho alternativas próximas que podem te interessar\"\n\n## ESTRATÉGIA DE COLETA:\n**Faixa de preço** (price_range_min/max)\n**Tipo de veículo** (preferred_car_type)\n**Forma de pagamento** (preferred_payment_method)\n**Ano mínimo** (preferred_year_min)\n**Tem carro para troca** (has_trade_in)\n\n## REGRAS DE RESPOSTA:\n- **UMA pergunta por vez** - nunca bombardeie\n- **Sempre confirme disponibilidade** antes de confirmar preferência\n- **Seja transparente** sobre limitações de estoque\n- **Ofereça alternativas** quando necessário\n- **Crie urgência** quando estoque limitado\n- **Tom consultivo** baseado em realidade do estoque\n\n## INSTRUÇÕES FINAIS:\n1. **Seja transparente** sobre limitações quando necessário"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        3200,
+        752
+      ],
+      "id": "977171e2-fcb5-4339-b924-d5ef7d1e51ea",
+      "name": "prompt_2_identificar_interesse",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        3168,
+        1008
+      ],
+      "id": "76f5d60c-c0c8-435d-b4a3-2866fa40a61b",
+      "name": "OpenAI Chat Model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "tQe8x2PkVEeffsHh",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Apresentação do Estoque",
+        "text": "={{ $('principalFields').item.json.message }}",
+        "options": {
+          "systemMessage": "=Você é a assistente virtual da loja de carros \"{{$('VeioDeAnuncio').item.json.nome_da_loja}}\" especializada em apresentação de estoque.\n\n## CONTEXTO DA SITUAÇÃO: \n{{ $('AgentDeBriefing').item.json.output }}\n\n## SUA MISSÃO:\nApresentar veículos personalizados baseados nas preferências coletadas e estratégia do briefing.\n\n## PROCESSO OBRIGATÓRIO:\n\n### PASSO 1: SEGUIR ESTRATÉGIA DO BRIEFING\n- Use a **SITUAÇÃO** para entender o perfil do cliente\n- Aplique a **ESTRATÉGIA** de apresentação recomendada\n- **EVITE** abordagens indicadas no briefing\n\n### PASSO 2: BUSCAR ESTOQUE DIRECIONADO\n**EXECUTE BuscarCarrosDisponiveis** com os critérios:\n- Faixa de preço das preferências\n- Tipo de veículo preferido\n- Filtros adicionais se relevantes\n\n### PASSO 3: APRESENTAR OPÇÕES ESTRATÉGICAMENTE\n**MÁXIMO 3 CARROS** com apresentação personalizada baseada no briefing.\n\n### PASSO 4: EXECUTAR TOOLS DE ATUALIZAÇÃO\n1. **AtualizarStatusCliente** - Evolui para \"evaluating_options\"\n2. **AtualizarSummaryInteracao** - Atualiza stage e probabilidade\n\n## FORMATO DE APRESENTAÇÃO:\n\n### **ESTRUTURA OBRIGATÓRIA:**\n```\n[Frase personalizada baseada no briefing]\n\nEncontrei [X] opções que se encaixam no seu perfil:\n\n1️⃣ **[Marca Modelo Ano Motorização]**\n💰 R$ [Preço] • 🛣️ [KM] km • ⛽ [Combustível]\n[Destaque específico baseado nas preferências]\n\n2️⃣ **[Marca Modelo Ano Motorização]**\n💰 R$ [Preço] • 🛣️ [KM] km • ⛽ [Combustível]\n[Destaque específico baseado nas preferências]\n\n3️⃣ **[Marca Modelo Ano Motorização]**\n💰 R$ [Preço] • 🛣️ [KM] km • ⛽ [Combustível]\n[Destaque específico baseado nas preferências]\n\n[Call-to-action personalizado]\n```\n\n## ESTRATÉGIA POR TIPO DE CLIENTE:\n\n### **CLIENTE FOCADO EM PREÇO:**\n- Destaque economia, financiamento, custo-benefício\n- \"Dentro do seu orçamento de até 120k, separei estas opções:\"\n\n### **CLIENTE FOCADO EM TIPO:**\n- Destaque características do tipo escolhido\n- \"Encontrei estes SUVs que combinam com seu perfil familiar:\"\n\n### **CLIENTE INDECISO:**\n- Varie tipos e faixas, explique diferenças\n- \"Selecionei opções variadas para você comparar:\"\n\n### **CLIENTE QUALIFICADO:**\n- Foque em disponibilidade e próximos passos\n- \"Estas são nossas melhores opções disponíveis para test drive:\"\n\n## PERSONALIZAÇÃO DOS DESTAQUES:\n\n### **Para SUVs:**\n- \"Perfeito para família e viagens\"\n- \"Amplo porta-malas e 7 lugares\"\n- \"Ótima altura do solo\"\n\n### **Para Sedans:**\n- \"Conforto e elegância\"\n- \"Baixo consumo urbano\"\n- \"Porta-malas espaçoso\"\n\n### **Para Hatchs:**\n- \"Ágil no trânsito urbano\"\n- \"Fácil de estacionar\"\n- \"Econômico no dia a dia\"\n\n## CALL-TO-ACTIONS PERSONALIZADOS:\n\n### **Cliente Engajado:**\n\"Qual desses modelos despertou mais seu interesse? Posso detalhar características específicas!\"\n\n### **Cliente Hesitante:**\n\"Que tal conhecer melhor um desses modelos? Posso explicar os diferenciais de cada um.\"\n\n### **Cliente Qualificado:**\n\"Gostaria de agendar um test drive com algum desses modelos? Temos disponibilidade esta semana!\"\n\n## REGRAS DE APRESENTAÇÃO:\n\n### **CRITÉRIOS DE SELEÇÃO:**\n- Priorize match exato com preferências\n- Varie marcas/anos para comparação\n- Inclua pelo menos uma \"oportunidade\" (melhor custo-benefício)\n- Considere proximidade da faixa de preço\n\n### **SE NÃO HOUVER MATCH PERFEITO:**\n- Apresente opções próximas às preferências\n- Explique brevemente os critérios usados\n- Ofereça expandir busca: \"Posso mostrar opções em outras faixas?\"\n\n### **INFORMAÇÕES OBRIGATÓRIAS:**\n- Marca, modelo, ano, motorização\n- Preço formatado\n- Quilometragem\n- Combustível\n- Um destaque específico por carro\n\n## EXEMPLOS POR SITUAÇÃO:\n\n### **Cliente com Preferências Claras (SUV, 80-120k):**\n```\nPerfeito! Baseado no seu interesse em SUVs na faixa de 80-120k, encontrei estas opções:\n\n1️⃣ **Honda HR-V 2022 1.8 CVT**\n💰 R$ 95.000 • 🛣️ 25.000 km • ⛽ Flex\nPerfeito para família, baixo consumo e revisado em concessionária\n\n2️⃣ **Hyundai Creta 2021 2.0 Automático**\n💰 R$ 89.000 • 🛣️ 35.000 km • ⛽ Flex\nAmplo espaço interno e central multimídia completa\n\n3️⃣ **Renault Duster 2023 1.6 CVT**\n💰 R$ 105.000 • 🛣️ 15.000 km • ⛽ Flex\nPraticamente zero km, ideal para aventuras e cidade\n\nQual desses modelos despertou mais seu interesse?\n```\n\n### **Cliente Indeciso (sem tipo definido):**\n```\nPara ajudar na sua escolha, selecionei opções variadas na sua faixa de preço:\n\n1️⃣ **Toyota Corolla 2021 2.0 CVT** (Sedan)\n💰 R$ 85.000 • 🛣️ 28.000 km • ⛽ Flex\nConforto e economia, ideal para executivos\n\n2️⃣ **Volkswagen T-Cross 2022 1.0 TSI** (SUV)\n💰 R$ 92.000 • 🛣️ 20.000 km • ⛽ Flex\nVersatilidade urbana com espaço de SUV\n\n3️⃣ **Honda Fit 2020 1.5 CVT** (Hatch)\n💰 R$ 75.000 • 🛣️ 18.000 km • ⛽ Flex\nÁgil no trânsito e muito econômico\n\nQue tipo de uso você fará mais: cidade, viagem ou misto?\n```\n\n## FERRAMENTAS OBRIGATÓRIAS:\n- **BuscarCarrosDisponiveis** (sempre primeiro)\n- **AtualizarStatusCliente** (sempre segundo)\n- **AtualizarSummaryInteracao** (sempre terceiro)\n\n## INSTRUÇÕES FINAIS:\n1. **SEMPRE siga** a estratégia do briefing\n2. **Personalize** apresentação baseada no perfil identificado\n3. **Execute as 3 ferramentas** obrigatoriamente\n4. **Máximo 3 carros** com destaques específicos\n5. **Call-to-action** adequado ao momento do cliente\n\nO briefing já analisou o cliente - use essas informações para uma apresentação certeira e eficaz."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        3856,
+        528
+      ],
+      "id": "f1c7a118-17b1-4149-b51a-a5e4d5c4e5c0",
+      "name": "prompt_3_apresentar_estoque"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        3680,
+        720
+      ],
+      "id": "be7cdfc2-9b48-44d1-b703-72a045678bf2",
+      "name": "OpenAI Chat Model3",
+      "credentials": {
+        "openAiApi": {
+          "id": "tQe8x2PkVEeffsHh",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Detalhamento do Veículo",
+        "text": "={{ $('principalFields').item.json.message }}",
+        "options": {
+          "systemMessage": "=Quando cliente demonstrar interesse em um veículo específico, forneça informações.\n\n## CONTEXTO DA SITUAÇÃO: \n{{ $('AgentDeBriefing').item.json.output }}\n\nINFORMAÇÕES OBRIGATÓRIAS:\n- Motorização e características técnicas principais\n- Itens de série e opcionais relevantes\n- Estado de conservação/revisões\n- Garantias oferecidas\n- Condições de pagamento\n\nESTRUTURA DA RESPOSTA:\n1. Características técnicas (1-2 frases)\n2. Principais opcionais (3-4 itens máximo)\n3. Estado/garantia (1 frase)\n4. Oferta de mais informações\n\nEXEMPLO:\n\"O [Modelo] possui motor [especificação], [opcional 1], [opcional 2], [opcional 3] e [opcional 4]. Está revisado e com garantia de X meses/anos. Posso enviar mais fotos ou um vídeo para você ver todos os detalhes?\"\n\nEXTRAS A OFERECER:\n- Mais fotos\n- Vídeo do veículo\n- Histórico de revisões\n- Simulação de financiamento\n- Avaliação de troca\n\nLINGUAGEM:\n- Técnica mas acessível\n- Destaque pontos positivos genuinamente\n- Seja específica e precisa"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        4224,
+        512
+      ],
+      "id": "bf11ac35-78e6-46a1-85a5-099e3256b1be",
+      "name": "prompt_4_detalhar_veiculo"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        4144,
+        944
+      ],
+      "id": "57dca900-b706-4062-a8db-bc318758dc08",
+      "name": "OpenAI Chat Model4",
+      "credentials": {
+        "openAiApi": {
+          "id": "tQe8x2PkVEeffsHh",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Qualificação e Teste de Interesse",
+        "text": "Avalie se o cliente está pronto para avançar no processo de compra.\n\nOBJETIVOS:\n- Identificar nível real de interesse\n- Superar objeções iniciais\n- Qualificar necessidade de troca\n- Preparar para agendamento\n\nPERGUNTAS ESTRATÉGICAS:\n- \"Gostaria de avaliar o carro pessoalmente?\"\n- \"Tem algum carro para dar como parte do pagamento?\"\n- \"Está comparando com outras opções ou já decidiu?\"\n\nSE CLIENTE HESITAR:\n- Ofereça comparativos\n- Apresente alternativas similares\n- Pergunte sobre dúvidas específicas\n- Reforce benefícios do modelo\n\nSE CLIENTE TIVER USADO:\n- Peça dados básicos do veículo\n- Ofereça avaliação prévia\n- Explique processo de troca\n\nSINAIS DE INTERESSE ALTO:\n- Pergunta sobre teste drive\n- Quer ver pessoalmente\n- Pergunta sobre documentação\n- Discute formas de pagamento\n\nPRÓXIMO PASSO:\n- Interesse alto → Agendar visita\n- Interesse médio → Mais informações\n- Interesse baixo → Entender objeções",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        4672,
+        592
+      ],
+      "id": "615e1932-31a0-496e-b453-a77773aa4198",
+      "name": "prompt_5_qualificar_interesse"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        4544,
+        800
+      ],
+      "id": "c9af9a66-0adf-474d-a4fb-e6bfed641ae1",
+      "name": "OpenAI Chat Model5",
+      "credentials": {
+        "openAiApi": {
+          "id": "tQe8x2PkVEeffsHh",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Agendamento da Visita",
+        "text": "Conduza o agendamento de forma eficiente e profissional.\n\nHORÁRIOS DISPONÍVEIS: 09h às 17h (intervalos de 1 hora)\n\nPROCESSO:\n1. Ofereça 2-3 opções de horários\n2. Aguarde escolha do cliente\n3. Confirme dados coletados\n4. Registre no sistema\n5. Envie confirmação\n\nFORMATO DE OFERTA:\n\"Podemos agendar sua visita para ver o [Modelo] ainda esta semana. Tenho disponibilidade:\n📅 [Dia] às [hora] ou [Dia] às [hora]. Qual horário fica melhor para você?\"\n\nDADOS A CONFIRMAR:\n- Nome completo\n- Telefone\n- Veículo de interesse\n- Horário escolhido\n- Se tem carro para troca\n\nFLEXIBILIDADE:\n- Ofereça opções de dias diferentes\n- Considere preferências manhã/tarde\n- Permita reagendamento se necessário\n\nREGISTRAR:\n- Todas informações no sistema\n- Alertas para vendedor responsável\n- Lembretes automáticos",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        5008,
+        528
+      ],
+      "id": "4ca5be67-2e99-4644-938f-8595dbb7ccd6",
+      "name": "prompt_6_agendar_visita"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        4928,
+        800
+      ],
+      "id": "01d69148-9c95-464c-9908-811a081ccba8",
+      "name": "OpenAI Chat Model6",
+      "credentials": {
+        "openAiApi": {
+          "id": "tQe8x2PkVEeffsHh",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        6848,
+        912
+      ],
+      "id": "4dea8d17-da0e-4091-a699-3d4ef4e551ec",
+      "name": "OpenAI Chat Model12",
+      "credentials": {
+        "openAiApi": {
+          "id": "tQe8x2PkVEeffsHh",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        7184,
+        752
+      ],
+      "id": "377647c3-9b10-4430-9968-e2fc2f81e0d5",
+      "name": "OpenAI Chat Model13",
+      "credentials": {
+        "openAiApi": {
+          "id": "tQe8x2PkVEeffsHh",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        7872,
+        768
+      ],
+      "id": "ae53811c-f08f-4a57-858a-74a659629b2c",
+      "name": "OpenAI Chat Model14",
+      "credentials": {
+        "openAiApi": {
+          "id": "tQe8x2PkVEeffsHh",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Qualificação de Troca",
+        "text": "\nQuando cliente mencionar troca de veículo, colete informações necessárias.\n\nDADOS ESSENCIAIS:\n- Marca e modelo do veículo usado\n- Ano de fabricação\n- Quilometragem aproximada\n- Estado geral de conservação\n- Documentação em dia\n\nPERGUNTAS SEQUENCIAIS:\n1. \"Que carro você tem para dar como entrada?\"\n2. \"Qual o ano e quantos quilômetros tem?\"\n3. \"Como está o estado geral? Tem algum problema?\"\n4. \"A documentação está toda em dia?\"\n\nAVALIAÇÃO PRÉVIA:\n- Dê estimativa baseada em tabela\n- Explique que avaliação final é presencial\n- Calcule diferença aproximada\n- Mostre vantagens da troca\n\nEXEMPLO:\n\"Seu [Modelo Ano] está cotado em torno de R$ [valor] na tabela. Para uma avaliação precisa, nosso especialista precisa ver o carro pessoalmente. A diferença ficaria aproximadamente R$ [valor]. Vale a pena agendar para ver os dois carros juntos?\"\n\nCUIDADOS:\n- Não dê valores finais por mensagem\n- Sempre condicione à avaliação presencial\n- Seja realista nas estimativas\n- Explique processo de troca",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        7888,
+        560
+      ],
+      "id": "0964bad4-635d-4279-8fec-9d4b265c224a",
+      "name": "prompt_13_qualificar_troca"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Tratamento de Objeções Comuns",
+        "text": "Gerencie objeções frequentes de forma profissional e eficaz.\n\nOBJEÇÃO: \"ESTÁ MUITO CARO\"\nResposta: \"Entendo sua preocupação com o preço. Este valor está alinhado com o mercado para este modelo e ano. Posso mostrar uma comparação de preços similares e também temos condições de financiamento que podem facilitar. Gostaria de ver as opções?\"\n\nOBJEÇÃO: \"PRECISO PENSAR\"\nResposta: \"Claro, é uma decisão importante! Enquanto você pensa, posso deixar suas informações salvas e te mandar mais detalhes do carro? Assim você pode analisar com calma e me procurar quando decidir.\"\n\nOBJEÇÃO: \"VOU VER OUTROS CARROS ANTES\"\nResposta: \"Perfeito, é sempre bom comparar! Que tal agendar uma visita aqui também para você ter uma base de comparação? Assim pode avaliar todos e fazer a melhor escolha.\"\n\nOBJEÇÃO: \"NÃO TENHO TEMPO AGORA\"\nResposta: \"Sem problemas! Quando seria um bom momento para você? Posso agendar para a próxima semana ou quando for melhor para sua agenda.\"\n\nSEMPRE:\n- Valide a objeção\n- Ofereça solução específica\n- Mantenha porta aberta\n- Não pressione desnecessariamente",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        7392,
+        512
+      ],
+      "id": "5ade4225-496e-4fc5-a69f-406c4e9fa4f9",
+      "name": "prompt_12_tratar_objecoes"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Confirmação e Pós-Agendamento",
+        "text": "\nFinalize o agendamento e prepare cliente para visita.\n\nCONFIRMAÇÃO DEVE INCLUIR:\n✅ Data e horário escolhidos\n🚗 Veículo selecionado e preço\n👤 Nome do vendedor responsável  \n📍 Endereço completo da loja\n\nFORMATO DA CONFIRMAÇÃO:\n\"Agendamento confirmado ✅\n📅 [Dia] às [horário]\n🚗 [Modelo Ano Motor] -- R$ [preço]\n👤 Vendedor responsável: [Nome]\n📍 [Endereço completo]\nVai ser um prazer recebê-lo!\"\n\nAÇÕES PÓS-AGENDAMENTO:\n- Registrar no sistema interno\n- Programar lembrete para dia anterior\n- Disponibilizar contato direto do vendedor\n- Oferecer possibilidade de reagendamento\n\nLEMBRETE AUTOMÁTICO:\n- Enviar 1 dia antes por WhatsApp\n- Incluir localização no GPS\n- Confirmar horário\n- Disponibilizar telefone da loja\n\nFACILITADORES:\n- Link para localização\n- Telefone direto do vendedor\n- Opção de reagendamento fácil\n- Suporte para dúvidas",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        6944,
+        496
+      ],
+      "id": "9b58fd3d-2072-4fbb-8af9-d97e41250861",
+      "name": "prompt_11_confirmar_agendamento"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.customer_data.source !== 'advertising' }}",
+                    "rightValue": "true",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    },
+                    "id": "99578323-59c1-447a-b99b-2abb03d9f4ac"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "modelo_1_sem_especificacao"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e5cccddc-49a6-4a9c-9bcc-caf9feab6593",
+                    "leftValue": "={{ $json.customer_data.source === 'advertising' }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "modelo_2_com_anuncio"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": 0
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1824,
+        384
+      ],
+      "id": "5cc25b19-0dbc-4638-9aa6-e2dc0bd8001d",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \n    c.id,\n    c.phone_number,\n    c.name,\n    c.email,\n    c.status,\n  c.total_interactions,\n  c.last_interaction,\n    c.source_channel,\n    c.assigned_salesperson,\n    \n    cp.price_range_min,\n    cp.price_range_max,\n    cp.preferred_car_type,\n    cp.preferred_payment_method,\n    cp.has_trade_in,\n    cp.trade_in_brand,\n    cp.trade_in_model,\n    cp.trade_in_year,\n    cp.id as cpid,\n    \n    cis.last_model_viewed,\n    cis.last_car_id_interested,\n    cis.interaction_stage,\n    \n    cis.last_objection_type,\n    cis.conversion_probability,\n    \n    cis.id as cisid\nFROM customers c\nLEFT JOIN customer_preferences cp ON c.id = cp.customer_id\nLEFT JOIN customer_interactions_summary cis ON c.id = cis.customer_id\nWHERE c.phone_number = '{{ $('principalFields').item.json.phoneNumber }}';",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1616,
+        -368
+      ],
+      "id": "7c59ecff-55dc-4bf1-8862-206344162c6d",
+      "name": "BuscaLead2",
+      "credentials": {
+        "postgres": {
+          "id": "BGQa8Box2oEOXg4s",
+          "name": "VENDEDOR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Abertura com Reconhecimento",
+        "text": "Cliente já demonstrou interesse em veículo específico. Valide e confirme.\n\nOBJETIVO: Confirmar interesse no carro específico do anúncio\n\nABERTURA OBRIGATÓRIA:\n\"Olá, tudo bem? Vi que você demonstrou interesse no [Modelo Ano Motorização] que anunciamos. Gostaria de confirmar: é esse modelo mesmo que você gostaria de conhecer melhor?\"\n\nCENÁRIOS:\n✅ SE CONFIRMAR:\n- Avance para detalhamento do veículo\n- \"Perfeito! Deixe me te contar mais sobre ele...\"\n\n❌ SE NÃO CONFIRMAR:\n- Pergunte qual carro chamou atenção\n- \"Ah, entendi! Qual modelo te interessou então?\"\n- Redirecione para processo de identificação\n\nVANTAGENS DESTA ABORDAGEM:\n- Cliente já tem interesse demonstrado\n- Processo mais direto\n- Menos qualificação necessária\n- Maior chance de conversão\n\nNÃO FAÇA:\n- Assumir que é o carro certo\n- Pular validação\n- Pressionar vendas imediatamente",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        5424,
+        608
+      ],
+      "id": "c473467b-3d4f-4fde-a966-7de33e77addc",
+      "name": "prompt_7_reconhecer_anuncio"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Detalhamento do Anúncio",
+        "text": "\nCliente confirmou interesse. Apresente informações completas do veículo anunciado.\n\nINFORMAÇÕES ESSENCIAIS:\n- Ano, versão e motorização\n- Quilometragem atual\n- Preço anunciado\n- Principais opcionais\n- Garantias/preparação\n\nFORMATO SUGERIDO:\n\"Perfeito! Esse [Modelo Ano] tem [KM] km, motor [especificação], [opcional 1], [opcional 2] e [opcional 3]. Já está revisado e preparado. O valor anunciado é R$ [preço]. Deseja que eu envie mais fotos ou até um vídeo para você conferir os detalhes?\"\n\nELEMENTOS EXTRAS:\n- Estado de conservação\n- Histórico conhecido\n- Diferenciais do veículo\n- Urgência (se houver procura)\n\nCALL-TO-ACTION:\n- Oferecer mais fotos\n- Propor envio de vídeo\n- Sugerir informações adicionais\n\nLINGUAGEM:\n- Confirmativa e confiante\n- Destaque pontos fortes\n- Crie senso de valor\n- Mantenha interesse alto",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        5776,
+        624
+      ],
+      "id": "24c37819-0ed8-4b79-bbd4-f61c1d79fcd9",
+      "name": "prompt_8_detalhar_anunciado"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Quebra de Objeções e Engajamento",
+        "text": "\nEstimule interação e supere possíveis objeções do cliente.\n\nTÓPICOS A EXPLORAR:\n1. Forma de pagamento preferida\n2. Necessidade de troca\n3. Dúvidas sobre preço/condições\n4. Comparação com outras opções\n\nPERGUNTAS ESTRATÉGICAS:\n- \"Você pretende pagar à vista, financiar ou pensa em dar seu carro como parte do pagamento?\"\n- \"Posso calcular uma simulação rápida para você?\"\n- \"Tem alguma dúvida específica sobre o veículo?\"\n\nSE HOUVER OBJEÇÃO DE PREÇO:\n- Apresente comparativos de mercado\n- Mostre condições de pagamento\n- Destaque custo-benefício\n- Ofereça simulações\n\nSE HOUVER INDECISÃO:\n- Pergunte sobre outras opções que está vendo\n- Destaque diferenciais do seu veículo\n- Crie senso de urgência apropriado\n\nMANTER ENGAJAMENTO:\n- Faça perguntas abertas\n- Mostre interesse genuíno\n- Ofereça soluções personalizadas\n- Mantenha conversa ativa",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        6176,
+        512
+      ],
+      "id": "37935590-f4a5-4092-be2c-680aec781f5a",
+      "name": "prompt_9_quebrar_objecoes"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Condução para Visita",
+        "text": "Após apresentar detalhes e esclarecer dúvidas, conduza naturalmente para agendamento.\n\nESTRATÉGIA:\n- Criar senso de necessidade de ver pessoalmente\n- Mencionar qualidade/estado do veículo\n- Sugerir procura de outros clientes (se verdade)\n- Facilitar o processo de agendamento\n\nFRASE DE TRANSIÇÃO:\n\"Esse [Modelo] está em ótimo estado e temos recebido bastante procura nele. Para facilitar, podemos agendar uma visita para você ver pessoalmente. Posso sugerir alguns horários?\"\n\nALTERNATIVAS:\n- \"Que tal ver o carro ao vivo? Garanto que vai gostar ainda mais!\"\n- \"Para você ter certeza, que tal marcar uma visita? Só vendo pessoalmente para ter certeza total.\"\n\nSE CLIENTE RESISTIR:\n- Pergunte sobre objeções específicas\n- Ofereça mais informações\n- Sugira visita sem compromisso\n- Mantenha porta aberta para futuro\n\nBENEFÍCIOS DA VISITA:\n- Ver estado real do veículo\n- Fazer teste drive\n- Esclarecer dúvidas finais\n- Negociar condições pessoalmente",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        6560,
+        592
+      ],
+      "id": "4b6a2954-f64e-4668-8ede-8dd20a96bb22",
+      "name": "prompt_10_conduzir_visita"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        6464,
+        1056
+      ],
+      "id": "34da71a2-49fe-43f9-a73f-03308f5ece28",
+      "name": "OpenAI Chat Model11",
+      "credentials": {
+        "openAiApi": {
+          "id": "tQe8x2PkVEeffsHh",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        6128,
+        784
+      ],
+      "id": "1ef02714-8d9b-46fa-b17f-acdc87c8c7b1",
+      "name": "OpenAI Chat Model10",
+      "credentials": {
+        "openAiApi": {
+          "id": "tQe8x2PkVEeffsHh",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        5696,
+        928
+      ],
+      "id": "e6880884-5a34-4249-8d9f-6ad311aa9e0c",
+      "name": "OpenAI Chat Model9",
+      "credentials": {
+        "openAiApi": {
+          "id": "tQe8x2PkVEeffsHh",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        5360,
+        800
+      ],
+      "id": "e9979419-ae32-40c6-98fc-3a894afe76a9",
+      "name": "OpenAI Chat Model8",
+      "credentials": {
+        "openAiApi": {
+          "id": "tQe8x2PkVEeffsHh",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- Atualizar status após primeira resposta\nUPDATE customers \nSET \n    status = CASE \n        WHEN status = 'new' THEN 'contacted'\n        ELSE status  -- Mantém status atual se não for 'new'\n     END,\n    last_interaction = NOW(),\n    total_interactions = total_interactions + 1\nWHERE id = {{ $('Aggregate').item.json.data[0].customer_data.id }};\n\n-- Registrar tool usage\nUPDATE customer_interactions_summary \nSET \n    interaction_stage = 'greeted',\n    tools_used_count =  jsonb_set(\n      COALESCE(tools_used_count, '{}'::jsonb),\n      '{prompt_1}', '1'::jsonb, true\n    ),\n    updated_at = NOW()\nWHERE customer_id = {{ $('Aggregate').item.json.data[0].customer_data.id }};",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        2896,
+        752
+      ],
+      "id": "0147005a-5465-4df6-8002-63f85fa7af14",
+      "name": "AtualizarStatusContacted",
+      "credentials": {
+        "postgres": {
+          "id": "BGQa8Box2oEOXg4s",
+          "name": "VENDEDOR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "OK",
+        "height": 400,
+        "width": 576
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2528,
+        496
+      ],
+      "typeVersion": 1,
+      "id": "dca52690-7802-4cef-a36c-4d73f91e6185",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('principalFields').item.json.phoneNumber }}",
+        "tableName": "conversation_history",
+        "contextWindowLength": 7
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        2464,
+        352
+      ],
+      "id": "50cebae7-5579-4e96-bc85-c04c44319e78",
+      "name": "Postgres Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "BGQa8Box2oEOXg4s",
+          "name": "VENDEDOR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('principalFields').item.json.message }}",
+        "options": {
+          "systemMessage": "=Você é um ANALISTA INTELIGENTE que examina toda a situação do cliente para preparar um briefing contextualizado com base em regras específicas de decisão.\n\n## PROCESSO OBRIGATÓRIO:\n\n### PASSO 1: BUSCAR HISTÓRICO\n**SEMPRE execute BuscarHistoricoConversa primeiro** para entender o contexto completo.\n\n### PASSO 2: ANALISAR SITUAÇÃO COMPLETA\n**Mensagem atual:** \"{{ $('principalFields').item.json.message }}\"\n\n**Contexto estruturado:**\n- Cliente: {{ $json.data[0].customer_data.name || 'Cliente' }}\n- Status: {{ $json.data[0].customer_data.status }}\n- Stage: {{ $json.data[0].interaction_context.stage || 'initial' }}\n- Interações: {{ $json.data[0].interaction_context.total_interactions || 0 }}\n- Origem: {{ $json.data[0].customer_data.source || 'whatsapp' }}\n- Preferências: \n  * Preço: {{ ($json.data[0].preferences.price_range_min && $json.data[0].preferences.price_range_max) ? $json.data[0].preferences.price_range_min + '-' + $json.data[0].preferences.price_range_max : 'não definido' }}\n  * Tipo: {{ $json.data[0].preferences.car_type || 'não definido' }}\n  * Pagamento: {{ $json.data[0].preferences.payment_method || 'não definido' }}\n- Probabilidade: {{ $json.data[0].interaction_context.probability || 20 }}%\n- Último interesse: {{ $json.data[0].interaction_context.last_model_viewed || 'nenhum' }}\n- Tem troca: {{ $json.data[0].preferences.has_trade ? 'Sim' : 'Não' }}\n\n### PASSO 3: INTERPRETAR COM HISTÓRICO\n**Analise padrões e contexto:**\n- A mensagem faz referência a conversas anteriores?\n- Cliente demonstra evolução ou regressão de interesse?\n- Há objeções recorrentes ou mudanças de preferência?\n- Que oportunidades o histórico revela?\n\n### PASSO 4: APLICAR REGRAS DE DECISÃO\n**Use as regras específicas abaixo para determinar a categoria correta:**\n\n## REGRAS DE DECISÃO (por ordem de prioridade):\n\n### **PRIORIDADE 1 - ANÁLISE DA MENSAGEM (sempre verificar primeiro):**\n\n**1. Se mensagem menciona modelo específico de carro** → **CATEGORIA: DETALHAMENTO**\n- Exemplos: \"Civic\", \"Corolla\", \"HRV\", \"Onix\", \"esse modelo\", \"aquele carro\"\n\n**2. Se mensagem indica agendamento/visita/horário** → **CATEGORIA: AGENDAMENTO**\n- Exemplos: \"agendar\", \"visita\", \"ir aí\", \"que horas\", \"horário\", \"quando posso ir\"\n\n**3. Se mensagem menciona troca/venda de carro** → **CATEGORIA: TROCA**\n- Exemplos: \"tenho carro para trocar\", \"quero vender meu carro\", \"dar de entrada\"\n\n**4. Se mensagem indica objeção (preço alto, sem tempo, etc.)** → **CATEGORIA: OBJECOES**\n- Exemplos: \"muito caro\", \"não tenho tempo\", \"vou pensar\", \"não tenho dinheiro\"\n\n**5. Se mensagem indica hesitação/dúvidas** → **CATEGORIA: QUEBRAR_OBJECOES**\n- Exemplos: \"não sei\", \"estou em dúvida\", \"talvez\", \"não tenho certeza\"\n\n### **PRIORIDADE 2 - ESTÁGIO DA INTERAÇÃO (interaction_stage):**\n\n**6. Se stage = 'initial'** → **CATEGORIA: ABERTURA**\n\n**7. Se stage = 'collecting_preferences'** → **CATEGORIA: COLETA_PREFERENCIAS**\n\n**8. Se stage = 'preferences_complete' OU 'evaluating_options'** → **CATEGORIA: APRESENTACAO_ESTOQUE**\n\n**9. Se stage = 'interested_specific' OU 'interested_ad_specific'** → **CATEGORIA: QUALIFICACAO**\n\n**10. Se stage = 'qualified' OU 'ready_to_schedule'** → **CATEGORIA: AGENDAMENTO**\n\n**11. Se stage = 'scheduling'** → **CATEGORIA: AGENDAMENTO** (continuar processo)\n\n**12. Se stage = 'scheduled'** → **CATEGORIA: CONFIRMACAO**\n\n**13. Se stage = 'ad_validation'** → **CATEGORIA: RECONHECER_ANUNCIO**\n\n**14. Se stage = 'trade_evaluation'** → **CATEGORIA: TROCA**\n\n**15. Se stage = 'hesitating'** → **CATEGORIA: QUEBRAR_OBJECOES**\n\n**16. Se stage = 'objecting'** → **CATEGORIA: OBJECOES**\n\n**17. Se stage = 'nudging_visit'** → **CATEGORIA: CONDUZIR_VISITA**\n\n**17.1. Se stage não está na lista conhecida** → **CATEGORIA: QUALIFICACAO** (stage desconhecido)\n\n### **PRIORIDADE 3 - CASOS ESPECIAIS (quando stage não é claro):**\n\n**18. Se source contém 'ad' E stage = 'initial'** → **CATEGORIA: RECONHECER_ANUNCIO**\n\n**19. Se status = 'qualified' E probability > 70** → **CATEGORIA: AGENDAMENTO**\n\n**20. Se probability < 30 E total_interactions > 3** → **CATEGORIA: QUEBRAR_OBJECOES**\n\n### **VALIDAÇÕES DE CONTEXTO:**\n- Se stage = 'initial' mas total_interactions > 5: → **CATEGORIA: QUALIFICACAO** (cliente perdido)\n- Se stage não condiz com status: Priorize stage sobre status\n- Se last_interest existe mas stage = 'initial': → **CATEGORIA: DETALHAMENTO**\n\n### **FALLBACK:**\n**21. Se nenhuma regra anterior se aplica** → **CATEGORIA: QUALIFICACAO**\n\n## CATEGORIAS DISPONÍVEIS E MAPEAMENTO:\n\n- **ABERTURA** → prompt_1_abertura (Primeiro contato, saudações, cliente novo)\n- **COLETA_PREFERENCIAS** → prompt_2_identificar_interesse (Coletar ou completar preferências)\n- **APRESENTACAO_ESTOQUE** → prompt_3_apresentar_estoque (Mostrar carros baseado em preferências)\n- **DETALHAMENTO** → prompt_4_detalhar_veiculo (Cliente interessado em modelo específico)\n- **QUALIFICACAO** → prompt_5_qualificar_interesse (Aprofundar interesse, qualificar cliente)\n- **AGENDAMENTO** → prompt_6_agendar_visita (Cliente pronto para agendar visita)\n- **RECONHECER_ANUNCIO** → prompt_7_reconhecer_anuncio (Cliente veio de anúncio)\n- **DETALHAR_ANUNCIADO** → prompt_8_detalhar_anunciado (Detalhar carro específico do anúncio)\n- **QUEBRAR_OBJECOES** → prompt_9_quebrar_objecoes (Cliente hesitante ou com dúvidas)\n- **CONDUZIR_VISITA** → prompt_10_conduzir_visita (Incentivar visita à loja)\n- **CONFIRMACAO** → prompt_11_confirmar_agendamento (Confirmar agendamentos existentes)\n- **OBJECOES** → prompt_12_tratar_objecoes (Cliente demonstra resistência)\n- **TROCA** → prompt_13_qualificar_troca (Cliente quer avaliar veículo de troca)\n\n## FORMATO OBRIGATÓRIO DE RESPOSTA:\n\nTermine SEMPRE sua análise com:\n\n```\nSITUAÇÃO: [Resumo da situação atual baseado em dados + histórico]\nOPORTUNIDADE: [O que pode ser conquistado neste momento] \nESTRATÉGIA: [Como abordar baseado no contexto específico]\nEVITAR: [O que não fazer baseado no histórico]\nCATEGORIA_RECOMENDADA: [Uma das categorias acima baseada nas regras]\nJUSTIFICATIVA: [Qual regra específica foi aplicada e por quê]\nREGRA_APLICADA: [Número da regra de 1-21 que determinou a categoria]\n```\n\n## EXEMPLOS COM REGRAS APLICADAS:\n\n### Exemplo 1:\n**Contexto:** Status \"new\", stage \"initial\", 0 interações\n**Mensagem:** \"Oi\"\n**Regra aplicada:** Regra 6 (stage = 'initial')\n\n```\nSITUAÇÃO: Cliente novo fazendo primeiro contato via WhatsApp. Sem histórico de conversa, sem preferências definidas. Status \"new\" com 0 interações anteriores.\nOPORTUNIDADE: Primeira impressão é fundamental. Criar rapport, identificar necessidade inicial e coletar informações básicas.\nESTRATÉGIA: Saudação calorosa, apresentação da loja, pergunta aberta sobre necessidade de carro para identificar direção da conversa.\nEVITAR: Bombardear com perguntas, ser muito comercial logo de início, assumir qualquer preferência.\nCATEGORIA_RECOMENDADA: ABERTURA\nJUSTIFICATIVA: Stage está como 'initial' e cliente é novo, aplicando regra de estágio da interação.\nREGRA_APLICADA: Regra 6 (Se stage = 'initial' → CATEGORIA: ABERTURA)\n```\n\n### Exemplo 2:\n**Contexto:** Cliente retornante, tem preferências definidas\n**Mensagem:** \"Quero ver o Civic\"\n**Regra aplicada:** Regra 1 (menciona modelo específico)\n\n```\nSITUAÇÃO: Cliente menciona interesse específico no modelo Civic. Já tem preferências básicas definidas e agora demonstra interesse em modelo específico.\nOPORTUNIDADE: Cliente está pronto para aprofundar detalhes de um modelo específico, momento ideal para apresentar características e conduzir para próximos passos.\nESTRATÉGIA: Focar nos atributos específicos do Civic, disponibilidade, preço, opções de financiamento e possibilidade de test drive.\nEVITAR: Apresentar outros modelos ou voltar a coletar preferências básicas.\nCATEGORIA_RECOMENDADA: DETALHAMENTO\nJUSTIFICATIVA: Mensagem menciona modelo específico \"Civic\", que tem prioridade máxima sobre qualquer outro critério.\nREGRA_APLICADA: Regra 1 (Se mensagem menciona modelo específico de carro → CATEGORIA: DETALHAMENTO)\n```\n\n### Exemplo 3:\n**Contexto:** Cliente com source 'ad_facebook', stage 'initial'\n**Mensagem:** \"Vi o anúncio do carro\"\n**Regra aplicada:** Regra 18 (source contém 'ad' + stage 'initial')\n\n```\nSITUAÇÃO: Cliente veio através de anúncio no Facebook e está fazendo primeiro contato referenciando o anúncio visto.\nOPORTUNIDADE: Cliente já tem interesse demonstrado pelo anúncio, momento ideal para conectar com o conteúdo que ele viu e qualificar interesse.\nESTRATÉGIA: Referenciar o anúncio específico, confirmar qual carro despertou interesse, e aproveitar o momentum do anúncio.\nEVITAR: Ignorar que ele veio do anúncio ou tratar como cliente completamente novo.\nCATEGORIA_RECOMENDADA: RECONHECER_ANUNCIO\nJUSTIFICATIVA: Source contém 'ad' e stage é 'initial', caso especial que tem precedência.\nREGRA_APLICADA: Regra 18 (Se source contém 'ad' E stage = 'initial' → CATEGORIA: RECONHECER_ANUNCIO)\n```\n\n## TOOLS DISPONÍVEIS:\n- **BuscarHistoricoConversa** (obrigatória)\n\n## INSTRUÇÕES FINAIS:\n1. SEMPRE busque histórico primeiro com BuscarHistoricoConversa\n2. Aplique as regras na ordem de prioridade (1-21)\n3. SEMPRE termine com o formato estruturado incluindo REGRA_APLICADA\n4. A primeira regra que se aplicar determina a categoria\n5. Use as referências corretas dos dados: $json.data[0].campo.subcampo"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        2400,
+        -304
+      ],
+      "id": "d739e5d5-a976-4d66-a690-2da735f5dfff",
+      "name": "AgentDeBriefing"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        2256,
+        -80
+      ],
+      "id": "a5779472-9cc6-4e7f-a1f3-e750d426cacc",
+      "name": "OpenAI Chat Model7",
+      "credentials": {
+        "openAiApi": {
+          "id": "tQe8x2PkVEeffsHh",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "conversation_history",
+          "mode": "list",
+          "cachedResultName": "conversation_history"
+        },
+        "limit": 8,
+        "where": {
+          "values": [
+            {
+              "column": "session_id",
+              "value": "={{ $('principalFields').item.json.phoneNumber }}"
+            }
+          ]
+        },
+        "sort": {
+          "values": [
+            {
+              "column": "id"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        2624,
+        -96
+      ],
+      "id": "08f959d5-4bcc-4cb1-8cf7-1780c50d42ef",
+      "name": "BuscarHistoricoConversa",
+      "credentials": {
+        "postgres": {
+          "id": "BGQa8Box2oEOXg4s",
+          "name": "VENDEDOR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        2128,
+        -208
+      ],
+      "id": "8756772c-a561-43b3-ad7b-121aa8274789",
+      "name": "Aggregate",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- ===========================================\n-- TOOL 4: AtualizarSummaryInteracao\n-- ===========================================\n-- Atualiza stage detalhado e probabilidade baseado no progresso\nWITH pref AS (\n  SELECT\n    cp.customer_id,\n    (cp.price_range_min IS NOT NULL)                          AS has_min,\n    (cp.price_range_max IS NOT NULL)                          AS has_max,\n    (cp.preferred_car_type IS NOT NULL)                       AS has_type,\n    (cp.preferred_payment_method IS NOT NULL)                 AS has_pay,\n    (cp.price_range_min IS NOT NULL AND\n     cp.preferred_car_type IS NOT NULL AND\n     cp.preferred_payment_method IS NOT NULL)                 AS essentials_done\n  FROM customer_preferences cp\n  WHERE cp.customer_id = $1\n)\nUPDATE customer_interactions_summary s\nSET\n  interaction_stage = CASE\n    WHEN p.essentials_done THEN 'preferences_complete'\n    WHEN (p.has_min OR p.has_max OR p.has_type OR p.has_pay) THEN 'collecting_preferences'\n    ELSE s.interaction_stage\n  END,\n  conversion_probability = CASE\n    WHEN p.essentials_done THEN LEAST(s.conversion_probability + 20, 90)\n    WHEN ((p.has_min OR p.has_max) AND p.has_type) THEN LEAST(s.conversion_probability + 15, 90)\n    WHEN (p.has_min OR p.has_type OR p.has_pay) THEN LEAST(s.conversion_probability + 10, 90)\n    ELSE s.conversion_probability\n  END,\n  tools_used_count = jsonb_set(\n    COALESCE(s.tools_used_count, '{}'::jsonb),\n    '{prompt_2}',\n    to_jsonb( COALESCE((s.tools_used_count->>'prompt_2')::int, 0) + 1 ),\n    true\n  ),\n  updated_at = NOW()\nFROM pref p\nWHERE s.customer_id = p.customer_id;",
+        "options": {
+          "queryReplacement": "={{ $('Aggregate').item.json.data[0].customer_data.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        3184,
+        1568
+      ],
+      "id": "ab01c1e2-18de-4290-ba86-324f5280cf20",
+      "name": "AtualizarSummaryInteracao",
+      "alwaysOutputData": false,
+      "credentials": {
+        "postgres": {
+          "id": "BGQa8Box2oEOXg4s",
+          "name": "VENDEDOR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "customers",
+          "mode": "list",
+          "cachedResultName": "customers"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Aggregate').item.json.data[0].customer_data.id }}",
+            "last_interaction": "={{ $now }}",
+            "total_interactions": "=total_interactions + 1",
+            "status": "="
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "phone_number",
+              "displayName": "phone_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "options",
+              "canBeUsedToMatch": true,
+              "options": [
+                {
+                  "name": "lost",
+                  "value": "lost"
+                },
+                {
+                  "name": "purchased",
+                  "value": "purchased"
+                },
+                {
+                  "name": "visited",
+                  "value": "visited"
+                },
+                {
+                  "name": "scheduled",
+                  "value": "scheduled"
+                },
+                {
+                  "name": "qualified",
+                  "value": "qualified"
+                },
+                {
+                  "name": "contacted",
+                  "value": "contacted"
+                },
+                {
+                  "name": "new",
+                  "value": "new"
+                }
+              ],
+              "removed": false
+            },
+            {
+              "id": "source_channel",
+              "displayName": "source_channel",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "assigned_salesperson",
+              "displayName": "assigned_salesperson",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "last_interaction",
+              "displayName": "last_interaction",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "total_interactions",
+              "displayName": "total_interactions",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "lead_score",
+              "displayName": "lead_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        3600,
+        1408
+      ],
+      "id": "07433c00-c9be-4025-a14e-77a84d175852",
+      "name": "AtualizarStatusCliente33",
+      "credentials": {
+        "postgres": {
+          "id": "BGQa8Box2oEOXg4s",
+          "name": "VENDEDOR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- 2. Atualizar customers (evolução inteligente)\nUPDATE customers \nSET \n    status = CASE \n        WHEN status = 'contacted' AND (\n            -- Se coletou preferências essenciais (preço E tipo)\n            EXISTS(\n                SELECT 1 FROM customer_preferences cp \n                WHERE cp.customer_id = {{ $('Aggregate').item.json.data[0].customer_data.id }}\n                AND (cp.price_range_min IS NOT NULL OR cp.price_range_max IS NOT NULL)\n                AND cp.preferred_car_type IS NOT NULL\n            )\n        ) THEN 'interested'\n        -- WHEN status = 'new' THEN 'contacted' -- prompt_1 faz isso\n        ELSE status \n    END,\n    last_interaction = NOW(),\n    total_interactions = total_interactions + 1\nWHERE id = {{ $('Aggregate').item.json.data[0].customer_data.id }};",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        3184,
+        1408
+      ],
+      "id": "8a629666-b179-4150-8724-ad15c4e5404b",
+      "name": "AtualizarStatusCliente",
+      "alwaysOutputData": false,
+      "credentials": {
+        "postgres": {
+          "id": "BGQa8Box2oEOXg4s",
+          "name": "VENDEDOR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "customer_preferences",
+          "mode": "list",
+          "cachedResultName": "customer_preferences"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "has_trade_in": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('has_trade_in', `Se o cliente possui veículo para troca\nValores possíveis:\n\nNULL (não perguntado ainda)\ntrue - Cliente tem carro para trocar\nfalse - Cliente não tem carro para trocar\n\nRelacionamento:\n\nSe true → campos trade_in_* devem ser preenchidos\nSe false → campos trade_in_* ficam NULL`, 'boolean') }}",
+            "customer_id": "={{ $('Aggregate').item.json.data[0].customer_data.id }}",
+            "id": "={{ $('Aggregate').item.json.data[0].preferences.id }}",
+            "price_range_min": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('price_range_min', `Valor mínimo da faixa de preço desejada pelo cliente.\nValores possíveis:\n\nNULL (não informado ainda)\n0 a 999999999 (valores em reais)\nExemplos comuns:\n\n30000 (R$ 30.000)\n50000 (R$ 50.000)\n80000 (R$ 80.000)\n100000 (R$ 100.000)\n150000 (R$ 150.000)`, 'number') }}",
+            "price_range_max": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('price_range_max', `Valor máximo da faixa de preço desejada pelo cliente\nValores possíveis:\n\nNULL (não informado ainda)\n0 a 999999999 (valores em reais)\nDeve ser >= price_range_min (quando ambos preenchidos)\nExemplos comuns:\n\n60000 (R$ 60.000)\n100000 (R$ 100.000)\n120000 (R$ 120.000)\n200000 (R$ 200.000)\n300000 (R$ 300.000)`, 'number') }}",
+            "preferred_car_type": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('preferred_car_type', `Tipo/categoria de veículo preferido pelo cliente\nValores possíveis:\n\nNULL (não informado)\n'SUV' - Veículos utilitários esportivos\n'Sedan' - Carros de 4 portas com porta-malas separado\n'Hatch' - Carros compactos com porta-malas integrado\n'Pickup' - Caminhonetes\n'Crossover' - Híbrido entre SUV e hatch\n'Coupe' - Carros esportivos 2 portas\n'Wagon' - Peruas/station wagon\n'Conversível' - Carros conversíveis\n'Van' - Veículos comerciais/familiares grandes\n\nExemplos de uso do cliente:\n\n\"SUV para família\"\n\"Sedan executivo\"\n\"Hatch para cidade\"\n\"Pickup para trabalho\"`, 'string') }}",
+            "preferred_year_min": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('preferred_year_min', `Ano mínimo do veículo que o cliente aceita\nValores possíveis:\n\nNULL (não informado/flexível)\n2010 a 2024 (anos válidos)\nExemplos comuns:\n\n2018 (modelos 2018 em diante)\n2020 (modelos mais novos)\n2015 (até 9 anos de uso)\n2022 (seminovos recentes)`, 'number') }}",
+            "preferred_payment_method": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('preferred_payment_method', ` Forma de pagamento preferida pelo cliente\nValores possíveis:\n\nNULL (não informado)\n'cash' - À vista (dinheiro/transferência)\n'financing' - Financiamento bancário\n'trade_in' - Troca com carro usado\n'mixed' - Troca + financiamento do saldo\n'leasing' - Leasing/consórcio\n\nFrases do cliente que indicam:\n\n\"À vista\" → 'cash'\n\"Financiado\" → 'financing'\n\"Tenho carro para dar de entrada\" → 'trade_in'\n\"Troca + financio diferença\" → 'mixed'`, 'string') }}",
+            "trade_in_brand": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('trade_in_brand', `Marca do veículo de troca\nValores possíveis:\n\nNULL (sem troca ou não informado)\nMarcas nacionais: 'Chevrolet', 'Fiat', 'Ford', 'Volkswagen'\nMarcas importadas: 'Toyota', 'Honda', 'Hyundai', 'Nissan'\nMarcas premium: 'BMW', 'Mercedes-Benz', 'Audi'\nOutras: 'Renault', 'Peugeot', 'Jeep', 'Mitsubishi'\n\nSó preenchido quando has_trade_in = true`, 'string') }}",
+            "trade_in_model": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('trade_in_model', `Modelo do veículo de troca\nValores possíveis:\n\nNULL (sem troca ou não informado)\nExemplos por marca:\n\nToyota: 'Corolla', 'Camry', 'RAV4', 'Hilux'\nHonda: 'Civic', 'Accord', 'HR-V', 'CR-V'\nChevrolet: 'Onix', 'Cruze', 'Tracker', 'S10'\nVolkswagen: 'Jetta', 'Tiguan', 'T-Cross', 'Amarok'\n\n\n\nSó preenchido quando has_trade_in = true`, 'string') }}",
+            "trade_in_year": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('trade_in_year', `Ano do veículo de troca\nValores possíveis:\n\nNULL (sem troca ou não informado)\n1990 a 2024 (anos válidos de veículos)\nExemplos comuns:\n\n2018, 2019, 2020 (carros relativamente novos)\n2015, 2016, 2017 (carros intermediários)\n2010 a 2014 (carros mais antigos)\n\n\n\nSó preenchido quando has_trade_in = true`, 'number') }}",
+            "updated_at": "={{ $now }}",
+            "trade_in_estimated_value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('trade_in_estimated_value', `Valor estimado do veículo de troca (consultado na FIPE)\nValores possíveis:\n\nNULL (sem troca, não avaliado, ou não consultado FIPE ainda)\n5000.00 a 500000.00 (valores em reais com centavos)\nExemplos:\n\n25000.00 (R$ 25.000,00)\n45000.00 (R$ 45.000,00)\n75000.00 (R$ 75.000,00)\n\n\n\nPreenchido automaticamente pela API FIPE quando:\n\nhas_trade_in = true\ntrade_in_brand, model, year estão preenchidos\nTool prompt_13_qualificar_troca foi executada`, 'number') }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "customer_id",
+              "displayName": "customer_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "price_range_min",
+              "displayName": "price_range_min",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "price_range_max",
+              "displayName": "price_range_max",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "preferred_car_type",
+              "displayName": "preferred_car_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "preferred_year_min",
+              "displayName": "preferred_year_min",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "preferred_payment_method",
+              "displayName": "preferred_payment_method",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "has_trade_in",
+              "displayName": "has_trade_in",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "trade_in_brand",
+              "displayName": "trade_in_brand",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "trade_in_model",
+              "displayName": "trade_in_model",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "trade_in_year",
+              "displayName": "trade_in_year",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "updated_at",
+              "displayName": "updated_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "trade_in_estimated_value",
+              "displayName": "trade_in_estimated_value",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        3472,
+        1408
+      ],
+      "id": "49250ce9-e216-4e5b-853c-96b81abf3aa3",
+      "name": "AtualizarPreferenciasCliente33",
+      "credentials": {
+        "postgres": {
+          "id": "BGQa8Box2oEOXg4s",
+          "name": "VENDEDOR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- ===========================================\n-- TOOL 2: AtualizarPreferenciasCliente\n-- ===========================================\n-- Atualiza preferências do cliente baseado na mensagem atual\nUPDATE customer_preferences \nSET \n  price_range_min = COALESCE($1, price_range_min),\n  price_range_max = COALESCE($2, price_range_max),\n  preferred_car_type = case when $3 != 'x' then COALESCE($3, preferred_car_type) else preferred_car_type end,\n  preferred_year_min = COALESCE($4, preferred_year_min),\n  preferred_payment_method = case when $5 != 'x' then COALESCE($5, preferred_payment_method) else preferred_payment_method end,\n  has_trade_in = COALESCE($6, has_trade_in),\n  updated_at = NOW()\nWHERE customer_id = $7;\n",
+        "options": {
+          "queryReplacement": "={{ $fromAI('menor_preco_extraido', 'Preço mínimo extraído da mensagem do cliente', 'number', null) }},{{ $fromAI('maior_preco_extraido', 'Preço máximo extraído da mensagem do cliente', 'number', null) }},{{ $fromAI('tipo_de_carro_extraido', 'Tipo de carro extraído da mensagem (ex: SUV, Sedan, Hatch, Picape)', 'string', null) || 'x'}},{{ $fromAI('menor_ano_extraido', 'Ano mínimo extraído da mensagem do cliente', 'number', null) }},\"{{ $fromAI('forma_de_pagamento_extraida', 'Forma de pagamento extraída (ex: cash, financing, trade_in)', 'string', null) || 'x' }}\",{{ $fromAI('e_troca_extraido', 'Se cliente mencionou ter carro para troca', 'boolean', null) }},{{ $('Aggregate').item.json.data[0].customer_data.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        3184,
+        1232
+      ],
+      "id": "b2da55af-381a-4d1f-9c96-2c32c7f24c46",
+      "name": "AtualizarPreferenciasCliente",
+      "alwaysOutputData": false,
+      "credentials": {
+        "postgres": {
+          "id": "BGQa8Box2oEOXg4s",
+          "name": "VENDEDOR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM cars \nWHERE \n    status = 'available'\n    AND price BETWEEN \n        {{ $fromAI('buscar_preco_minimo', 'Preço mínimo', 'string', 0) }} \n        AND {{ $fromAI('buscar_preco_maximo', 'Preço máximo', 'string', 999999) }}\n    {{ ($fromAI('buscar_car_type', 'Tipo de Carro', 'string', false) === true ? 'AND car_type = ' + $fromAI('buscar_car_type', 'Tipo de Carro', 'string', false) : '') }}\nORDER BY \n    CASE WHEN price BETWEEN \n        {{ $fromAI('buscar_preco_minimo', 'Preço mínimo', 'string', 0) }} * 0.9 \n        AND {{ $fromAI('buscar_preco_maximo', 'Preço máximo', 'string', 999999) }} * 1.1 \n    THEN 1 ELSE 2 END,\n    price ASC\nLIMIT 3;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        3760,
+        864
+      ],
+      "id": "bc37ee38-c5c4-4d25-81f8-0a7dd125c770",
+      "name": "BuscarCarrosDisponiveis",
+      "credentials": {
+        "postgres": {
+          "id": "BGQa8Box2oEOXg4s",
+          "name": "VENDEDOR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- ===========================================\n-- TOOL: AtualizarStatusCliente\n-- ===========================================\n-- Atualiza status macro do cliente e registra interação\n\nUPDATE customers \nSET \n    status = CASE \n        -- Evolução baseada em contexto e ações\n        -- WHEN status = 'new' THEN 'contacted'\n        \n        WHEN status = 'contacted' AND (\n            -- Se coletou preferências essenciais\n            EXISTS(\n                SELECT 1 FROM customer_preferences cp \n                WHERE cp.customer_id = {{ $('Aggregate').item.json.data[0].customer_data.id }}\n                AND (cp.price_range_min IS NOT NULL OR cp.price_range_max IS NOT NULL)\n                AND cp.preferred_car_type IS NOT NULL\n            )\n        ) THEN 'interested'\n        \n        WHEN status = 'interested' AND (\n            -- Se já viu estoque (prompt_3 executado)\n            EXISTS(\n                SELECT 1 FROM customer_interactions_summary cis\n                WHERE cis.customer_id = {{ $('Aggregate').item.json.data[0].customer_data.id }}\n                AND cis.interaction_stage IN ('evaluating_options', 'interested_specific')\n            )\n        ) THEN 'qualified'\n        \n        WHEN status = 'qualified' AND (\n            -- Se demonstrou interesse específico ou alta probabilidade\n            EXISTS(\n                SELECT 1 FROM customer_interactions_summary cis\n                WHERE cis.customer_id = {{ $('Aggregate').item.json.data[0].customer_data.id }}\n                AND cis.conversion_probability >= 70\n            )\n        ) THEN 'ready_to_schedule'\n        \n        ELSE status -- Mantém status atual se não atender critérios\n    END,\n    \n    last_interaction = NOW(),\n    total_interactions = total_interactions + 1,\n    updated_at = NOW()\n    \nWHERE id = {{ $('Aggregate').item.json.data[0].customer_data.id }};",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        3904,
+        896
+      ],
+      "id": "b177a811-7bb7-40ff-bb1b-408aadb955f1",
+      "name": "AtualizarStatusCliente1",
+      "credentials": {
+        "postgres": {
+          "id": "BGQa8Box2oEOXg4s",
+          "name": "VENDEDOR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- ===========================================\n-- TOOL: AtualizarSummaryInteracao  \n-- ===========================================\n-- Atualiza micro-stages, probabilidade e métricas detalhadas\n\nUPDATE customer_interactions_summary \nSET \n    interaction_stage = CASE \n        -- Evolução baseada na ferramenta executada\n        \n        -- prompt_1_abertura\n        WHEN '{{ $json.tool_executed }}' = 'prompt_1_abertura' \n        THEN 'greeted'\n        \n        -- prompt_2_identificar_interesse\n        WHEN '{{ $json.tool_executed }}' = 'prompt_2_identificar_interesse' \n        THEN CASE\n            WHEN EXISTS(\n                SELECT 1 FROM customer_preferences cp\n                WHERE cp.customer_id = {{ $('Aggregate').item.json.data[0].customer_data.id }}\n                AND cp.price_range_min IS NOT NULL \n                AND cp.preferred_car_type IS NOT NULL \n                AND cp.preferred_payment_method IS NOT NULL\n            ) THEN 'preferences_complete'\n            ELSE 'collecting_preferences'\n        END\n        \n        -- prompt_3_apresentar_estoque\n        WHEN '{{ $json.tool_executed }}' = 'prompt_3_apresentar_estoque'\n        THEN 'evaluating_options'\n        \n        -- prompt_4_detalhar_veiculo\n        WHEN '{{ $json.tool_executed }}' = 'prompt_4_detalhar_veiculo'\n        THEN 'interested_specific'\n        \n        -- prompt_5_qualificar_interesse\n        WHEN '{{ $json.tool_executed }}' = 'prompt_5_qualificar_interesse'\n        THEN 'qualified'\n        \n        -- prompt_6_agendar_visita\n        WHEN '{{ $json.tool_executed }}' = 'prompt_6_agendar_visita'\n        THEN 'scheduling'\n        \n        -- prompt_7_reconhecer_anuncio\n        WHEN '{{ $json.tool_executed }}' = 'prompt_7_reconhecer_anuncio'\n        THEN 'ad_validation'\n        \n        -- prompt_8_detalhar_anunciado\n        WHEN '{{ $json.tool_executed }}' = 'prompt_8_detalhar_anunciado'\n        THEN 'interested_ad_specific'\n        \n        -- prompt_9_quebrar_objecoes\n        WHEN '{{ $json.tool_executed }}' = 'prompt_9_quebrar_objecoes'\n        THEN 'hesitating'\n        \n        -- prompt_10_conduzir_visita\n        WHEN '{{ $json.tool_executed }}' = 'prompt_10_conduzir_visita'\n        THEN 'nudging_visit'\n        \n        -- prompt_11_confirmar_agendamento\n        WHEN '{{ $json.tool_executed }}' = 'prompt_11_confirmar_agendamento'\n        THEN 'scheduled'\n        \n        -- prompt_12_tratar_objecoes\n        WHEN '{{ $json.tool_executed }}' = 'prompt_12_tratar_objecoes'\n        THEN 'objecting'\n        \n        -- prompt_13_qualificar_troca\n        WHEN '{{ $json.tool_executed }}' = 'prompt_13_qualificar_troca'\n        THEN 'trade_evaluation'\n        \n        ELSE interaction_stage -- Mantém se ferramenta não mapeada\n    END,\n    \n    conversion_probability = CASE \n        -- Ajuste baseado na ferramenta e progresso\n        \n        WHEN '{{ $json.tool_executed }}' = 'prompt_1_abertura'\n        THEN LEAST(conversion_probability + 5, 90) -- Primeiro contato positivo\n        \n        WHEN '{{ $json.tool_executed }}' = 'prompt_2_identificar_interesse'\n        THEN CASE\n            -- Se completou preferências essenciais\n            WHEN EXISTS(\n                SELECT 1 FROM customer_preferences cp\n                WHERE cp.customer_id = {{ $('Aggregate').item.json.data[0].customer_data.id }}\n                AND cp.price_range_min IS NOT NULL \n                AND cp.preferred_car_type IS NOT NULL \n                AND cp.preferred_payment_method IS NOT NULL\n            ) THEN LEAST(conversion_probability + 15, 90)\n            -- Se coletou pelo menos 1 preferência\n            WHEN EXISTS(\n                SELECT 1 FROM customer_preferences cp\n                WHERE cp.customer_id = {{ $('Aggregate').item.json.data[0].customer_data.id }}\n                AND (cp.price_range_min IS NOT NULL OR cp.preferred_car_type IS NOT NULL)\n            ) THEN LEAST(conversion_probability + 10, 90)\n            ELSE LEAST(conversion_probability + 5, 90)\n        END\n        \n        WHEN '{{ $json.tool_executed }}' = 'prompt_3_apresentar_estoque'\n        THEN LEAST(conversion_probability + 12, 90) -- Viu opções\n        \n        WHEN '{{ $json.tool_executed }}' = 'prompt_4_detalhar_veiculo'\n        THEN LEAST(conversion_probability + 20, 90) -- Interesse específico alto\n        \n        WHEN '{{ $json.tool_executed }}' = 'prompt_5_qualificar_interesse'\n        THEN LEAST(conversion_probability + 8, 90) -- Qualificação em andamento\n        \n        WHEN '{{ $json.tool_executed }}' = 'prompt_6_agendar_visita'\n        THEN LEAST(conversion_probability + 25, 90) -- Muito próximo da conversão\n        \n        WHEN '{{ $json.tool_executed }}' = 'prompt_9_quebrar_objecoes'\n        THEN GREATEST(conversion_probability - 5, 10) -- Reduz por hesitação\n        \n        WHEN '{{ $json.tool_executed }}' = 'prompt_12_tratar_objecoes'\n        THEN GREATEST(conversion_probability - 10, 10) -- Reduz por objeção\n        \n        ELSE conversion_probability -- Mantém para outras ferramentas\n    END,\n    \n    -- Registra qual ferramenta foi usada\n    tools_used_count = jsonb_set(\n        COALESCE(tools_used_count, '{}'::jsonb),\n        '{' || '{{ $json.tool_executed }}' || '}', \n        COALESCE((tools_used_count->>('{{ $json.tool_executed }}')), '0')::int + 1, \n        true\n    ),\n    \n    -- Atualiza timestamp da última modificação\n    updated_at = NOW()\n    \nWHERE customer_id = {{ $('Aggregate').item.json.data[0].customer_data.id }};",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        4048,
+        800
+      ],
+      "id": "6866e68f-04db-453d-b3b0-8f1e64615a08",
+      "name": "AtualizarSummaryInteracao1",
+      "credentials": {
+        "postgres": {
+          "id": "BGQa8Box2oEOXg4s",
+          "name": "VENDEDOR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- ===========================================\n-- TOOL 1: VerificarEstoqueDisponivelPorPreferencia\n-- ===========================================\n-- Verifica se existem carros disponíveis baseado nas preferências mencionadas\n\nSELECT \n    COUNT(*) as total_disponivel,\n    MIN(price) as preco_minimo,\n    MAX(price) as preco_maximo,\n    ARRAY_AGG(DISTINCT car_type) as tipos_disponiveis,\n    ARRAY_AGG(DISTINCT brand || ' ' || model) as modelos_exemplo\nFROM cars \nWHERE \n    status = 'available'\n    AND (\n        -- Se cliente mencionou faixa de preço\n        CASE \n            WHEN {{ $fromAI('buscar_menor_preco_mencionado', 'Preço mínimo que o cliente mencionou na mensagem atual', 'number', null) }} IS NOT NULL \n                 OR {{ $fromAI('buscar_maior_preco_mencionado', 'Preço máximo que o cliente mencionou na mensagem atual', 'number', null) }} IS NOT NULL\n            THEN price BETWEEN \n                COALESCE({{ $fromAI('buscar_menor_preco_mencionado', 'Preço mínimo que o cliente mencionou na mensagem atual', 'number', null) }}, 0)\n                AND COALESCE({{ $fromAI('buscar_maior_preco_mencionado', 'Preço máximo que o cliente mencionou na mensagem atual', 'number', null) }}, 999999)\n            ELSE TRUE\n        END\n    )\n    AND (\n        -- Se cliente mencionou tipo específico\n        CASE \n            WHEN '{{ $fromAI('tipo_de_carro_mencionado', 'Tipo de carro que o cliente mencionou na mensagem atual', 'string', '') }}' != ''\n            THEN UPPER(car_type) = UPPER('{{ $fromAI('tipo_de_carro_mencionado', 'Tipo de carro que o cliente mencionou na mensagem atual', 'string', '') }}')\n            ELSE TRUE\n        END\n    )\n    AND (\n        -- Se cliente mencionou ano mínimo\n        CASE \n            WHEN {{ $fromAI('menor_ano_mencionado', 'Ano mínimo que o cliente mencionou na mensagem atual', 'number', null) }} IS NOT NULL\n            THEN year >= {{ $fromAI('menor_ano_mencionado', 'Ano mínimo que o cliente mencionou na mensagem atual', 'number', null) }}\n            ELSE TRUE\n        END\n    );",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        3504,
+        944
+      ],
+      "id": "710e37bc-1f2c-48e9-9ebb-635a9cf28062",
+      "name": "VerificarEstoqueDisponivelPorPreferencia",
+      "credentials": {
+        "postgres": {
+          "id": "BGQa8Box2oEOXg4s",
+          "name": "VENDEDOR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- ===========================================\n-- 1: AtualizarPreferenciasCliente\n-- ===========================================\n-- Atualiza preferências do cliente baseado na mensagem atual\nUPDATE customer_preferences \nSET \n  price_range_min = COALESCE($1, price_range_min),\n  price_range_max = COALESCE($2, price_range_max),\n  preferred_car_type = case when $3 != 'x' then COALESCE($3, preferred_car_type) else preferred_car_type end,\n  preferred_year_min = COALESCE($4, preferred_year_min),\n  preferred_payment_method = case when $5 != 'x' then COALESCE($5, preferred_payment_method) else preferred_payment_method end,\n  has_trade_in = COALESCE($6, has_trade_in),\n  updated_at = NOW()\nWHERE customer_id = $7;\n\n-- 2. Atualizar customers (evolução inteligente)\nUPDATE customers \nSET \n    status = CASE \n        WHEN status = 'contacted' AND (\n            -- Se coletou preferências essenciais (preço E tipo)\n            EXISTS(\n                SELECT 1 FROM customer_preferences cp \n                WHERE cp.customer_id = $7\n                AND (cp.price_range_min IS NOT NULL OR cp.price_range_max IS NOT NULL)\n                AND cp.preferred_car_type IS NOT NULL\n            )\n        ) THEN 'interested'\n        -- WHEN status = 'new' THEN 'contacted' -- prompt_1 faz isso\n        ELSE status \n    END,\n    last_interaction = NOW(),\n    total_interactions = total_interactions + 1\nWHERE id = $7;\n\n-- ===========================================\n-- 3: AtualizarSummaryInteracao\n-- ===========================================\n-- Atualiza stage detalhado e probabilidade baseado no progresso\nWITH pref AS (\n  SELECT\n    cp.customer_id,\n    (cp.price_range_min IS NOT NULL)                          AS has_min,\n    (cp.price_range_max IS NOT NULL)                          AS has_max,\n    (cp.preferred_car_type IS NOT NULL)                       AS has_type,\n    (cp.preferred_payment_method IS NOT NULL)                 AS has_pay,\n    (cp.price_range_min IS NOT NULL AND\n     cp.preferred_car_type IS NOT NULL AND\n     cp.preferred_payment_method IS NOT NULL)                 AS essentials_done\n  FROM customer_preferences cp\n  WHERE cp.customer_id = $7\n)\nUPDATE customer_interactions_summary s\nSET\n  interaction_stage = CASE\n    WHEN p.essentials_done THEN 'preferences_complete'\n    WHEN (p.has_min OR p.has_max OR p.has_type OR p.has_pay) THEN 'collecting_preferences'\n    ELSE s.interaction_stage\n  END,\n  conversion_probability = CASE\n    WHEN p.essentials_done THEN LEAST(s.conversion_probability + 20, 90)\n    WHEN ((p.has_min OR p.has_max) AND p.has_type) THEN LEAST(s.conversion_probability + 15, 90)\n    WHEN (p.has_min OR p.has_type OR p.has_pay) THEN LEAST(s.conversion_probability + 10, 90)\n    ELSE s.conversion_probability\n  END,\n  tools_used_count = jsonb_set(\n    COALESCE(s.tools_used_count, '{}'::jsonb),\n    '{prompt_2}',\n    to_jsonb( COALESCE((s.tools_used_count->>'prompt_2')::int, 0) + 1 ),\n    true\n  ),\n  updated_at = NOW()\nFROM pref p\nWHERE s.customer_id = p.customer_id;",
+        "options": {
+          "queryReplacement": "={{ $fromAI('menor_preco_extraido', 'Preço mínimo extraído da mensagem do cliente', 'number', null) }},{{ $fromAI('maior_preco_extraido', 'Preço máximo extraído da mensagem do cliente', 'number', null) }},{{ $fromAI('tipo_de_carro_extraido', 'Tipo de carro extraído da mensagem (ex: SUV, Sedan, Hatch, Picape)', 'string', null) || 'x'}},{{ $fromAI('menor_ano_extraido', 'Ano mínimo extraído da mensagem do cliente', 'number', null) }},\"{{ $fromAI('forma_de_pagamento_extraida', 'Forma de pagamento extraída (ex: cash, financing, trade_in)', 'string', null) || 'x' }}\",{{ $fromAI('e_troca_extraido', 'Se cliente mencionou ter carro para troca', 'boolean', null) }},{{ $('Aggregate').item.json.data[0].customer_data.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        3296,
+        1056
+      ],
+      "id": "48896e7d-a265-4811-b427-e851e30c42df",
+      "name": "AtualizaSistemaCustomer",
+      "credentials": {
+        "postgres": {
+          "id": "BGQa8Box2oEOXg4s",
+          "name": "VENDEDOR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "OK",
+        "height": 496,
+        "width": 480
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3120,
+        720
+      ],
+      "typeVersion": 1,
+      "id": "ce5209fb-4c93-4b19-8904-409da6274d9a",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE customer_interactions_summary \nSET \n    last_model_viewed = '{{ $node['Query Car Details'].json.brand }} {{ $node['Query Car Details'].json.model }}',\n    last_car_id_interested = '{{ $node['Query Car Details'].json.car_id }}',\n    interaction_stage = 'interested',\n    conversion_probability = LEAST(conversion_probability + 15, 90),\n    updated_at = NOW()\nWHERE customer_id = '{{ $node['Context'].json.customer_id }}';",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        4240,
+        816
+      ],
+      "id": "f15cc614-4b85-4542-a50d-9de2311c4e67",
+      "name": "AtualizarInteresseCarro",
+      "credentials": {
+        "postgres": {
+          "id": "BGQa8Box2oEOXg4s",
+          "name": "VENDEDOR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \n    c.*,\n    cd.maintenance_history,\n    cd.accident_history,\n    cd.previous_owners,\n    cd.warranty_months,\n    cd.features,\n    cd.additional_photos\nFROM cars c\nWHERE c.car_id = '{{ $node['Extract Car ID'].json.car_id }}';",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        4384,
+        896
+      ],
+      "id": "d25e9456-6f73-4364-a6dd-b2dbb19608a8",
+      "name": "BuscarDetalhesDoCarro",
+      "credentials": {
+        "postgres": {
+          "id": "BGQa8Box2oEOXg4s",
+          "name": "VENDEDOR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE customers \nSET \n    name = '{{ $node['Extract Qualification'].json.nome_cliente }}',\n    email = '{{ $node['Extract Qualification'].json.email }}',\n    status = CASE \n        WHEN {{ $node['Extract Qualification'].json.interesse_nivel }} >= 7 THEN 'qualified'\n        WHEN {{ $node['Extract Qualification'].json.interesse_nivel }} >= 4 THEN 'interested'\n        ELSE 'contacted'\n    END,\n    updated_at = NOW()\nWHERE customer_id = '{{ $node['Context'].json.customer_id }}';\n\n-- Atualizar summary\nUPDATE customer_interactions_summary \nSET \n    interaction_stage = CASE \n        WHEN {{ $node['Extract Qualification'].json.pronto_para_visita }} THEN 'ready_to_schedule'\n        ELSE 'qualified'\n    END,\n    conversion_probability = {{ $node['Extract Qualification'].json.interesse_nivel }} * 10,\n    updated_at = NOW()\nWHERE customer_id = '{{ $node['Context'].json.customer_id }}';",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        4752,
+        816
+      ],
+      "id": "e04fe118-547c-4e68-b232-9f3cefa7daf3",
+      "name": "AtualizarDadosPrincipais",
+      "credentials": {
+        "postgres": {
+          "id": "BGQa8Box2oEOXg4s",
+          "name": "VENDEDOR"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "principalFields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "principalFields": {
+      "main": [
+        [
+          {
+            "node": "VeioDeAnuncio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "BuscaLead",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "CriarCliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BuscarCliente": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VeioDeAnuncio": {
+      "main": [
+        [
+          {
+            "node": "BuscarCliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CriarCliente": {
+      "main": [
+        [
+          {
+            "node": "CriarPreferencias",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CriarPreferencias": {
+      "main": [
+        [
+          {
+            "node": "CriarResumo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CriarResumo": {
+      "main": [
+        [
+          {
+            "node": "OutputCriarCliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BuscaLead": {
+      "main": [
+        [
+          {
+            "node": "OutputBuscarCliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AtualizaUltimaInteracao": {
+      "main": [
+        [
+          {
+            "node": "BuscaLead2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OutputBuscarCliente": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OutputCriarCliente": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AgentClassificador",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "AgentClassificador",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "prompt_1_abertura": {
+      "ai_tool": [
+        [
+          {
+            "node": "AgentClassificador",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "prompt_1_abertura",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "prompt_2_identificar_interesse": {
+      "ai_tool": [
+        [
+          {
+            "node": "AgentClassificador",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "prompt_2_identificar_interesse",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "prompt_3_apresentar_estoque": {
+      "ai_tool": [
+        [
+          {
+            "node": "AgentClassificador",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "prompt_3_apresentar_estoque",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "prompt_4_detalhar_veiculo": {
+      "ai_tool": [
+        [
+          {
+            "node": "AgentClassificador",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "prompt_4_detalhar_veiculo",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "prompt_5_qualificar_interesse": {
+      "ai_tool": [
+        [
+          {
+            "node": "AgentClassificador",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "prompt_5_qualificar_interesse",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "prompt_6_agendar_visita": {
+      "ai_tool": [
+        [
+          {
+            "node": "AgentClassificador",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model6": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "prompt_6_agendar_visita",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model12": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "prompt_11_confirmar_agendamento",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model13": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "prompt_12_tratar_objecoes",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model14": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "prompt_13_qualificar_troca",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "prompt_11_confirmar_agendamento": {
+      "ai_tool": [
+        [
+          {
+            "node": "AgentClassificador",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "prompt_12_tratar_objecoes": {
+      "ai_tool": [
+        [
+          {
+            "node": "AgentClassificador",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "prompt_13_qualificar_troca": {
+      "ai_tool": [
+        [
+          {
+            "node": "AgentClassificador",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BuscaLead2": {
+      "main": [
+        []
+      ]
+    },
+    "Switch": {
+      "main": [
+        [],
+        []
+      ]
+    },
+    "prompt_7_reconhecer_anuncio": {
+      "ai_tool": [
+        [
+          {
+            "node": "AgentClassificador",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "prompt_8_detalhar_anunciado": {
+      "ai_tool": [
+        [
+          {
+            "node": "AgentClassificador",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "prompt_9_quebrar_objecoes": {
+      "ai_tool": [
+        [
+          {
+            "node": "AgentClassificador",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "prompt_10_conduzir_visita": {
+      "ai_tool": [
+        [
+          {
+            "node": "AgentClassificador",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model11": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "prompt_10_conduzir_visita",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model10": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "prompt_9_quebrar_objecoes",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model9": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "prompt_8_detalhar_anunciado",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model8": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "prompt_7_reconhecer_anuncio",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AtualizarStatusContacted": {
+      "ai_tool": [
+        [
+          {
+            "node": "prompt_1_abertura",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AgentClassificador",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model7": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AgentDeBriefing",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BuscarHistoricoConversa": {
+      "ai_tool": [
+        [
+          {
+            "node": "AgentDeBriefing",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AgentDeBriefing": {
+      "main": [
+        [
+          {
+            "node": "AgentClassificador",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "AgentDeBriefing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AtualizarSummaryInteracao": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "AtualizarStatusCliente": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "AtualizarPreferenciasCliente33": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "AtualizarPreferenciasCliente": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "BuscarCarrosDisponiveis": {
+      "ai_tool": [
+        [
+          {
+            "node": "prompt_3_apresentar_estoque",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AtualizarStatusCliente1": {
+      "ai_tool": [
+        [
+          {
+            "node": "prompt_3_apresentar_estoque",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AtualizarSummaryInteracao1": {
+      "ai_tool": [
+        [
+          {
+            "node": "prompt_3_apresentar_estoque",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VerificarEstoqueDisponivelPorPreferencia": {
+      "ai_tool": [
+        [
+          {
+            "node": "prompt_2_identificar_interesse",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AtualizaSistemaCustomer": {
+      "ai_tool": [
+        [
+          {
+            "node": "prompt_2_identificar_interesse",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AtualizarInteresseCarro": {
+      "ai_tool": [
+        [
+          {
+            "node": "prompt_4_detalhar_veiculo",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BuscarDetalhesDoCarro": {
+      "ai_tool": [
+        [
+          {
+            "node": "prompt_4_detalhar_veiculo",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AtualizarDadosPrincipais": {
+      "ai_tool": [
+        [
+          {
+            "node": "prompt_5_qualificar_interesse",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Sao_Paulo",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "22b5b687-7de0-4abb-87e6-d82a94c43a2d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1ac0ff8d89164b1a87b147efcd4e413bacfc8edc7fb114b06e73281087673c9c"
+  },
+  "id": "cNmE4h5eFU4JHqEC",
+  "tags": []
+}
